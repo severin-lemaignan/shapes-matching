@@ -2,13 +2,30 @@
     <qresource prefix="/">
         <file>main.qml</file>
         <file>MainForm.ui.qml</file>
-        <file>images/circle.png</file>
-        <file>images/cross.png</file>
-        <file>images/star.png</file>
-        <file>images/square.png</file>
         <file>images/circle-yellow.png</file>
         <file>images/cross-yellow.png</file>
         <file>images/square-yellow.png</file>
         <file>images/star-yellow.png</file>
+        <file>images/circle-blue.png</file>
+        <file>images/circle-green.png</file>
+        <file>images/circle-purple.png</file>
+        <file>images/circle-red.png</file>
+        <file>images/circle-white.png</file>
+        <file>images/cross-blue.png</file>
+        <file>images/cross-green.png</file>
+        <file>images/cross-purple.png</file>
+        <file>images/cross-red.png</file>
+        <file>images/cross-white.png</file>
+        <file>images/square-blue.png</file>
+        <file>images/square-green.png</file>
+        <file>images/square-purple.png</file>
+        <file>images/square-red.png</file>
+        <file>images/square-white.png</file>
+        <file>images/star-blue.png</file>
+        <file>images/star-green.png</file>
+        <file>images/star-purple.png</file>
+        <file>images/star-red.png</file>
+        <file>images/star-white.png</file>
+        <file>Shape.qml</file>
     </qresource>
 </RCC>
