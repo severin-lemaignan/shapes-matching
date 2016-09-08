@@ -3,7 +3,7 @@ import QtQuick.Window 2.2
 
 Window {
     id: window1
-  //  visibility: "FullScreen"
+    visibility: "FullScreen"
     width: 1280
     height: 768
     color: "#000000"
@@ -154,8 +154,8 @@ Window {
             id: selectionColumn
             width: 200
             height: 400
-            anchors.bottom: parent.bottom
-            anchors.bottomMargin: 50
+            anchors.top: targetimage.bottom
+            anchors.topMargin: 150
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: selectionRow.spacing
 
