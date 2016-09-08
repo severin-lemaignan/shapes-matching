@@ -10,9 +10,14 @@ Window {
     title: "Shape Matching"
     visible: true
 
+
     property double starttime: {
         var date = new Date();
         window1.starttime = date.getTime();
+    }
+
+    property string logfilename: {
+        window1.logfilename = "shapes_matching_log_" + starttime;
     }
 
     Image {
@@ -98,14 +103,22 @@ Window {
         var d = new Date();
         var n = d.getTime();
 
-        if (shape == targetimage.name) {
+        var log = "";
+
+        if (shape === targetimage.name) {
             print("Correct answer");
+            log += "1,";
          } else {
             print("Incorrect answer");
+            log += "0,";
 
         }
 
         print("Reaction time: " + (n - window1.starttime) + "ms");
+        log += (n - window1.starttime)
+
+        fileio.write(window1.logfilename, log);
+
         window1.starttime = n;
 
 
