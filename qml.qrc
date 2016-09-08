@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>MainForm.ui.qml</file>
+        <file>images/circle.png</file>
+        <file>images/cross.png</file>
+        <file>images/star.png</file>
+        <file>images/square.png</file>
+        <file>images/circle-yellow.png</file>
+        <file>images/cross-yellow.png</file>
+        <file>images/square-yellow.png</file>
+        <file>images/star-yellow.png</file>
+    </qresource>
+</RCC>
