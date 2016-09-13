@@ -10,6 +10,4 @@ MouseArea {
         anchors.fill: parent
         source: "images/" + parent.name + "-" + parent.color + ".png"
     }
-    onClicked: shapeClicked(name, color)
 }
-

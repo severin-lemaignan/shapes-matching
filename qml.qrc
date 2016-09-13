@@ -1,7 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>main.qml</file>
-        <file>MainForm.ui.qml</file>
         <file>images/circle-yellow.png</file>
         <file>images/cross-yellow.png</file>
         <file>images/square-yellow.png</file>
@@ -27,5 +25,10 @@
         <file>images/star-red.png</file>
         <file>images/star-white.png</file>
         <file>Shape.qml</file>
+        <file>MainWindow.qml</file>
+        <file>main.qml</file>
+        <file>images/shape_matching_example.png</file>
+        <file>LikertScale.qml</file>
+        <file>MultipleChoice.qml</file>
     </qresource>
 </RCC>
