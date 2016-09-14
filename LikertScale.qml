@@ -41,54 +41,70 @@ Item {
 
     ColumnLayout {
         id: question
-        width: 900
-        spacing: 20
+        width: 1800
+        spacing: 50
 
         Text {
             id: questionText
             color: "#ffffff"
             text: likertscale.question
-            font.pixelSize: 24
+            font.pixelSize: 50
         }
 
         Row {
             id: subquestionItem1
             anchors.right: parent.right
             anchors.rightMargin: 0
-            spacing: 32
+            spacing: 100
 
             Text {
                 id: subquestionText1
                 color: "#b4b4b4"
                 text: likertscale.subquestion1
-                font.pixelSize: 20
+                font.pixelSize: 40
                 visible: false
             }
 
             Row {
                 id: row1
-                spacing: 7
+                spacing: 20
 
-                Label {
+                Text {
                     id: minText1
                 color: "#b4b4b4"
                     text: likertscale.minText
+                    font.pixelSize: 30
                 }
 
                 Slider {
                     id: scale
-                    width: 400
+                    width: 800
                     tickmarksEnabled: true
                     minimumValue: 1
                     value: 3
                     stepSize: 1
                     maximumValue: 5
+                    style: SliderStyle {
+                        handle: Rectangle {
+                            width: 60
+                            height: width
+                            radius: width/2
+                            color: "#fff"
+                        }
+                        groove: Rectangle {
+                            color: "#777"
+                            width: parent.width
+                            height:10
+                        }
+                    }
+
                 }
 
-                Label {
+                Text {
                     id: maxText1
                 color: "#b4b4b4"
                     text: likertscale.maxText
+                    font.pixelSize: 30
                 }
 
             }
@@ -103,35 +119,38 @@ Item {
                 id: subquestionText2
                 color: "#b4b4b4"
                 text: likertscale.subquestion2
-                font.pixelSize: 20
+                font.pixelSize: 40
             }
 
             Row {
                 id: row4
-                Label {
+                Text {
                     id: minText2
                 color: "#b4b4b4"
                     text: likertscale.minText
+                    font.pixelSize: 30
                 }
 
                 Slider {
                     id: scale1
-                    width: 400
+                    width: 800
                     value: 3
                     stepSize: 1
                     tickmarksEnabled: true
                     minimumValue: 1
                     maximumValue: 5
+                    style: scale.style
                 }
 
-                Label {
+                Text {
                     id: maxText2
                 color: "#b4b4b4"
                     text: likertscale.maxText
+                    font.pixelSize: 30
                 }
-                spacing: 7
+                spacing: 20
             }
-            spacing: 32
+            spacing: 100
         }
 
 

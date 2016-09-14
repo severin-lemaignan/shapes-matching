@@ -30,5 +30,6 @@
         <file>images/shape_matching_example.png</file>
         <file>LikertScale.qml</file>
         <file>MultipleChoice.qml</file>
+        <file>audio/story.mp3</file>
     </qresource>
 </RCC>

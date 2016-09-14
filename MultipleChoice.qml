@@ -16,14 +16,14 @@ Item {
 
     ColumnLayout {
         id: question
-        width: 900
-        spacing: 12
+        width: 1800
+        spacing: 50
 
         Text {
             id: questionText
             color: "#ffffff"
             text: multiplechoice.question
-            font.pixelSize: 24
+            font.pixelSize: 50
         }
         ExclusiveGroup { id: choiceGroup }
         RowLayout {
@@ -32,44 +32,64 @@ Item {
             Text {
                 color: "#b4b4b4"
                 text: multiplechoice.answer1
-                font.pixelSize: 20
+                font.pixelSize: 40
             }
 
             RadioButton {
                 id: answer1
                 exclusiveGroup: choiceGroup
+                style: RadioButtonStyle {
+                    indicator: Rectangle {
+                        width: 60
+                        height: width
+                        radius: width/2
+                        color: "#fff"
+                        Rectangle {
+                            anchors.fill:parent
+                            visible: control.checked
+                            color: "#555"
+                            width:parent.width - 8
+                            radius:width/2
+                            height:width
+                            anchors.margins: 4
+                        }
+                    }
+                }
             }
             Text {
                 color: "#b4b4b4"
                 text: multiplechoice.answer2
-                font.pixelSize: 20
+                font.pixelSize: 40
             }
 
             RadioButton {
                 id: answer2
                 exclusiveGroup: choiceGroup
+                style: answer1.style
             }
 
             Text {
                 color: "#b4b4b4"
                 text: multiplechoice.answer3
-                font.pixelSize: 20
+                font.pixelSize: 40
             }
 
             RadioButton {
                 id: answer3
                 exclusiveGroup: choiceGroup
+                                style: answer1.style
             }
 
             Text {
                 color: "#b4b4b4"
                 text: multiplechoice.answer4
-                font.pixelSize: 20
+                font.pixelSize: 40
             }
 
             RadioButton {
                 id: answer4
                 exclusiveGroup: choiceGroup
+                                style: answer1.style
             }
 
         }

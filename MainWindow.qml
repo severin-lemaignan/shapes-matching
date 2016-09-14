@@ -2,6 +2,7 @@ import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Controls.Styles 1.3
 import QtQuick.Layouts 1.1
+import QtMultimedia 5.5
 
 Rectangle {
     id: window1
@@ -17,6 +18,16 @@ Rectangle {
     property int count: 0
 
     property string logfilename: ""
+
+    onCountChanged: {
+        if (count == 10) {
+            giveupButton.visible = true;
+        }
+
+        if (count >= 20) {
+            state = "textquestions";
+        }
+    }
 
     states: [
         State {
@@ -47,6 +58,18 @@ Rectangle {
             PropertyChanges {
                 target: selectionColumn
                 anchors.topMargin: 40
+            }
+
+            PropertyChanges {
+                target: button1
+                text: qsTr("Give up")
+                visible: true
+            }
+
+            PropertyChanges {
+                target: giveupButton
+                anchors.rightMargin: 125
+                visible: false
             }
         },
         State {
@@ -115,13 +138,7 @@ Rectangle {
         },
         State {
             name: "endtext"
-            PropertyChanges {
-                target: shapes
-                anchors.rightMargin: 0
-                anchors.bottomMargin: 0
-                anchors.leftMargin: 0
-                anchors.topMargin: 0
-            }
+
 
             PropertyChanges {
                 target: instruction_text
@@ -140,6 +157,7 @@ Rectangle {
             PropertyChanges {
                 target: continueButton
                 text: qsTr("Continue")
+                visible:false
             }
         },
         State {
@@ -225,7 +243,7 @@ Rectangle {
 
         },
         State {
-            name: "textquestions"; when: window1.count == 10
+            name: "textquestions"
             PropertyChanges {
                 target: instructions
                 visible: false
@@ -346,6 +364,12 @@ Rectangle {
                 anchors.horizontalCenter: parent.horizontalCenter
             }
 
+            Audio {
+                id: audiostory
+                source: "audio/story.mp3"
+                onPlaying: {continueButton.visible = true;audiostory.stop();}
+            }
+
             Button {
                 id: continueButton
                 width: 300
@@ -364,6 +388,7 @@ Rectangle {
                 onClicked: {
                     if (window1.state == "") {
                         window1.state ="endtext";
+                        audiostory.play();
                         return;
                     }
 
@@ -449,6 +474,25 @@ Rectangle {
                 anchors.verticalCenter: parent.verticalCenter
                 source: "images/" + targetimage.name + "-" + color + ".png"
             }
+
+            Button {
+                id: giveupButton
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: parent.right
+                anchors.rightMargin: 40
+                width:400
+                text: "Give up"
+                style: ButtonStyle {
+                    label: Text {
+                        renderType: Text.NativeRendering
+                        verticalAlignment: Text.AlignVCenter
+                        horizontalAlignment: Text.AlignHCenter
+                        font.pointSize: 30
+                        text: giveupButton.text
+                    }
+                }
+                onClicked: window1.state = "textquestions"
+            }
         }
 
         Column {
@@ -516,7 +560,7 @@ Rectangle {
     ColumnLayout {
         id: questions
         y: 191
-        spacing: 60
+        spacing: 80
         width: childrenRect.width
         height: childrenRect.height
         anchors.verticalCenter: parent.verticalCenter
@@ -570,7 +614,7 @@ Rectangle {
             Text {
                 color: "#ffffff"
                 text: "I am a"
-                font.pixelSize: 24
+                font.pixelSize: 50
             }
 
             Row {
@@ -584,23 +628,41 @@ Rectangle {
                 Text {
                     color: "#b4b4b4"
                     text: "Female"
-                    font.pixelSize: 20
+                    font.pixelSize: 40
                 }
 
                 RadioButton {
                     id: isFemale
                     checked: true
                     exclusiveGroup: tabPositionGroup
+                    style: RadioButtonStyle {
+                        indicator: Rectangle {
+                            width: 60
+                            height: width
+                            radius: width/2
+                            color: "#fff"
+                            Rectangle {
+                                anchors.fill:parent
+                                visible: control.checked
+                                color: "#555"
+                                width:parent.width - 8
+                                radius:width/2
+                                height:width
+                                anchors.margins: 4
+                            }
+                        }
+                    }
                 }
                 Text {
                     color: "#b4b4b4"
                     text: "Male"
-                    font.pixelSize: 24
+                    font.pixelSize: 40
                 }
 
                 RadioButton {
                     id: isMale
                     exclusiveGroup: tabPositionGroup
+                    style: isFemale.style
                 }
             }
         }
@@ -613,24 +675,41 @@ Rectangle {
             spacing: 12
 
             Text {
+                id: blah
                 color: "#ffffff"
                 text: "My age"
-                font.pixelSize: 24
+                font.pixelSize: 50
             }
-
-            SpinBox {
-                id: age
-                anchors.left: parent.left
-                anchors.leftMargin: 50
-                value: 25
-                minimumValue: 15
-                style: SpinBoxStyle{
-                    background: Rectangle {
-                        implicitWidth: 100
-                        implicitHeight: 20
-                        border.color: "gray"
-                        radius: 2
+            Row {
+                spacing:40
+                Slider {
+                    id: age
+                    width: 1000
+                    tickmarksEnabled: false
+                    minimumValue: 15
+                    value: 25
+                    stepSize: 1
+                    maximumValue: 75
+                    style: SliderStyle {
+                        handle: Rectangle {
+                            width: 60
+                            height: width
+                            radius: width/2
+                            color: "#fff"
+                        }
+                        groove: Rectangle {
+                            color: "#777"
+                            width: parent.width
+                            height:10
+                        }
                     }
+
+                }
+
+                Text {
+                    text: age.value
+                    color: "#aaa"
+                    font.pixelSize: 40
                 }
             }
 
@@ -640,6 +719,8 @@ Rectangle {
             id: question1
             visible: false
             question: "I felt I was evaluated during the experiment for the quality of my work"
+
+
         }
 
         LikertScale {
@@ -698,6 +779,15 @@ Rectangle {
             id: nextquestionsButton
             text: qsTr("Continue")
             anchors.horizontalCenter: parent.horizontalCenter
+            style: ButtonStyle {
+                label: Text {
+                    renderType: Text.NativeRendering
+                    verticalAlignment: Text.AlignVCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pointSize: 30
+                    text: nextquestionsButton.text
+                }
+            }
             onClicked: {
                 if (window1.state === "textquestions") {
                     window1.state = "questionaire";
@@ -755,7 +845,7 @@ Rectangle {
         var newColorTarget = colors[Math.floor(Math.random()*colors.length)];
 
         var possiblepairs = [[newColorTarget, newSymbolTarget],
-                     [getRandom(colors, newColorTarget), newSymbolTarget]
+                             [getRandom(colors, newColorTarget), newSymbolTarget]
                 ]
 
         // The remaining symbols are all symbols except the new target symbol
@@ -772,33 +862,33 @@ Rectangle {
 
         shuffle(possiblepairs)
 
-        //shape1.color  = possiblepairs[0][0];
-        //shape1.name  = possiblepairs[0][1];
+                shape1.color  = possiblepairs[0][0];
+                shape1.name  = possiblepairs[0][1];
 
-        //shape2.color = possiblepairs[1][0];
-        //shape2.name = possiblepairs[1][1];
+                shape2.color = possiblepairs[1][0];
+                shape2.name = possiblepairs[1][1];
 
-        //shape3.color = possiblepairs[2][0];
-        //shape3.name = possiblepairs[2][1];
+                shape3.color = possiblepairs[2][0];
+                shape3.name = possiblepairs[2][1];
 
-        //shape4.color = possiblepairs[3][0];
-        //shape4.name = possiblepairs[3][1];
+                shape4.color = possiblepairs[3][0];
+                shape4.name = possiblepairs[3][1];
 
-        //shape5.color = possiblepairs[4][0];
-        //shape5.name = possiblepairs[4][1];
+                shape5.color = possiblepairs[4][0];
+                shape5.name = possiblepairs[4][1];
 
-        //shape6.color = possiblepairs[5][0];
-        //shape6.name = possiblepairs[5][1];
+                shape6.color = possiblepairs[5][0];
+                shape6.name = possiblepairs[5][1];
 
-        //shape7.color = possiblepairs[6][0];
-        //shape7.name = possiblepairs[6][1];
+                shape7.color = possiblepairs[6][0];
+                shape7.name = possiblepairs[6][1];
 
-        //shape8.color = possiblepairs[7][0];
-        //shape8.name = possiblepairs[7][1];
+                shape8.color = possiblepairs[7][0];
+                shape8.name = possiblepairs[7][1];
 
 
-        //targetimage.name = newSymbolTarget;
-        //targetimage.color = newColorTarget;
+                targetimage.name = newSymbolTarget;
+                targetimage.color = newColorTarget;
 
 
 
