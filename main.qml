@@ -3,7 +3,7 @@ import QtQuick.Window 2.2
 
 Window {
     id: mainWindow
-   visibility: "FullScreen"
+    visibility: "FullScreen"
     title: "Social Presence"
     visible: true
     width:1920

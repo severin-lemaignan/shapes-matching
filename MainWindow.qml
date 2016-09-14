@@ -251,40 +251,10 @@ Rectangle {
             }
 
             PropertyChanges {
-                target: question1
-                visible: false
-            }
-
-            PropertyChanges {
-                target: question2
-                visible: false
-            }
-
-            PropertyChanges {
-                target: question3
-                visible: false
-            }
-
-            PropertyChanges {
-                target: question4
-                visible: false
-            }
-
-            PropertyChanges {
-                target: agequestion
-                visible: false
-            }
-
-            PropertyChanges {
-                target: genderquestion
-                visible: false
-            }
-
-            PropertyChanges {
                 target: nextquestionsButton
-                anchors.rightMargin: 0
-            }
+                opacity: 0.0
 
+            }
             PropertyChanges {
                 target: textquestion1
                 visible: true
@@ -303,6 +273,25 @@ Rectangle {
                 target: textquestion4
                 visible: true
             }
+
+        },
+        State {
+            name: "textquestions2"
+            PropertyChanges {
+                target: instructions
+                visible: false
+            }
+            PropertyChanges {
+                target: nextquestionsButton
+                opacity: 0.0
+
+            }
+
+            PropertyChanges {
+                target: questions
+                visible: true
+            }
+
             PropertyChanges {
                 target: textquestion5
                 visible: true
@@ -378,7 +367,8 @@ Rectangle {
             Audio {
                 id: audiostory
                 source: "audio/story.mp3"
-                onPlaying: {continueButton.visible = true;audiostory.stop();}
+                onPlaying: {continueButton.visible = true;}
+                //onStopped: {continueButton.visible = true;}
             }
 
             Button {
@@ -405,6 +395,7 @@ Rectangle {
 
                     if (window1.state == "endtext") {
                         window1.state ="shapeinstructions";
+                        audiostory.stop();
                         return;
                     }
 
@@ -578,6 +569,23 @@ Rectangle {
         visible: false
         anchors.horizontalCenter: parent.horizontalCenter
 
+        property bool firstBlockAnswered: textquestion1.answered && textquestion2.answered && textquestion3.answered && textquestion4.answered
+
+        onFirstBlockAnsweredChanged: {
+            if (window1.state === "textquestions") {
+            nextquestionsButton.opacity = (firstBlockAnswered ? 1.0 : 0.0);
+            }
+        }
+        property bool secondBlockAnswered: textquestion5.answered &&
+        textquestion6.answered && textquestion7.answered &&
+        textquestion8.answered
+
+        onSecondBlockAnsweredChanged: {
+            if (window1.state === "textquestions2") {
+                nextquestionsButton.opacity = (secondBlockAnswered ? 1.0 : 0.0);
+            }
+        }
+
         MultipleChoice {
             id: textquestion1
             visible: false
@@ -613,6 +621,7 @@ Rectangle {
             answer2: "Captain Billy Murdoch"
             answer3: "Captain James Cook"
             answer4: "Captain Matthew Freeman"
+
 
         }
         MultipleChoice {
@@ -842,6 +851,10 @@ Rectangle {
             }
             onClicked: {
                 if (window1.state === "textquestions") {
+                    window1.state = "textquestions2";
+                    return;
+                }
+                if (window1.state === "textquestions2") {
                     window1.state = "questionaire";
                     return;
                 }

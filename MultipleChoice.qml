@@ -14,6 +14,10 @@ Item {
     property string answer3: "Answer 3"
     property string answer4: "Answer 4"
 
+    property bool answered: choiceGroup.current !== null
+
+    property int result: {if(choiceGroup.current) {result = choiceGroup.current.objectName;} else {result = "";}}
+
     ColumnLayout {
         id: question
         width: 1800
