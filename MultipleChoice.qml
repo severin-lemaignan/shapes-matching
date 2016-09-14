@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import QtQuick.Controls 1.4
 import QtQuick.Controls.Styles 1.4
+import QtQuick.Layouts 1.1
 
 Item {
     id: multiplechoice
@@ -13,10 +14,9 @@ Item {
     property string answer3: "Answer 3"
     property string answer4: "Answer 4"
 
-    Column {
+    ColumnLayout {
         id: question
         width: 900
-        anchors.horizontalCenter: parent.horizontalCenter
         spacing: 12
 
         Text {
@@ -26,9 +26,7 @@ Item {
             font.pixelSize: 24
         }
         ExclusiveGroup { id: choiceGroup }
-        Row {
-            width: childrenRect.width
-            height: childrenRect.height
+        RowLayout {
             spacing: 10
 
             Text {

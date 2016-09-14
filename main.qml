@@ -3,11 +3,11 @@ import QtQuick.Window 2.2
 
 Window {
     id: mainWindow
-   // visibility: "FullScreen"
+   visibility: "FullScreen"
     title: "Social Presence"
     visible: true
-    width:1200
-    height:800
+    width:1920
+    height:1080
 
     MainWindow {
         anchors.fill: parent

@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import QtQuick.Controls 1.3
 import QtQuick.Controls.Styles 1.3
+import QtQuick.Layouts 1.1
 
 Rectangle {
     id: window1
@@ -107,10 +108,7 @@ Rectangle {
 
             PropertyChanges {
                 target: instructions_image
-                width: 300
-                height: 300
                 visible: true
-                source: "images/shape_matching_example.png"
             }
 
 
@@ -303,7 +301,7 @@ Rectangle {
         visible: true
 
 
-        Column {
+        ColumnLayout {
             id: column1
             spacing: 20
             anchors.bottomMargin: 50
@@ -340,12 +338,12 @@ Rectangle {
 
             Image {
                 id: instructions_image
-                width: 100
-                height: 100
+                width: 300
+                height: 300
+                source: "images/shape_matching_example.png"
                 visible: false
                 fillMode: Image.PreserveAspectFit
                 anchors.horizontalCenter: parent.horizontalCenter
-                source: "qrc:/qtquickplugin/images/template_image.png"
             }
 
             Button {
@@ -391,7 +389,7 @@ Rectangle {
         }
     }
 
-    Column {
+    ColumnLayout {
         id: greetings
         anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
@@ -515,7 +513,7 @@ Rectangle {
 
     }
 
-    Column {
+    ColumnLayout {
         id: questions
         y: 191
         spacing: 60
@@ -525,7 +523,7 @@ Rectangle {
         visible: false
         anchors.horizontalCenter: parent.horizontalCenter
 
-          MultipleChoice {
+        MultipleChoice {
             id: textquestion1
             visible: false
             question: "What is the age of the capitain?"
@@ -534,7 +532,7 @@ Rectangle {
             answer3: "126"
             answer4: "55"
         }
-       MultipleChoice {
+        MultipleChoice {
             id: textquestion2
             visible: false
             question: "What is the age of the capitain?"
@@ -543,7 +541,7 @@ Rectangle {
             answer3: "126"
             answer4: "55"
         }
-       MultipleChoice {
+        MultipleChoice {
             id: textquestion3
             visible: false
             question: "What is the age of the capitain?"
