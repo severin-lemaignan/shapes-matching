@@ -18,6 +18,7 @@ Rectangle {
     property int count: 0
 
     property string logfilename: ""
+    property string qlogfilename: ""
 
     onCountChanged: {
         if (count == 10) {
@@ -99,6 +100,12 @@ Rectangle {
                 target: greetings_text1
                 text: "You can now return the tablet to the experimenter."
                 font.bold: false
+            }
+
+            PropertyChanges {
+                target: restartHiddenButton
+                visible:true
+
             }
         },
         State {
@@ -312,6 +319,23 @@ Rectangle {
 
     ]
 
+    MouseArea {
+        id: restartHiddenButton
+        width: 100
+        height: 100
+        anchors.top: parent.top
+        anchors.topMargin: 0
+        anchors.horizontalCenter: parent.horizontalCenter
+        visible: false
+        onClicked: window1.state = ""
+
+        Rectangle {
+            id: rectangle1
+            color: "#000"
+            anchors.fill: parent
+        }
+    }
+
     Rectangle {
         id: instructions
         color: "#000000"
@@ -388,6 +412,7 @@ Rectangle {
 
                 onClicked: {
                     if (window1.state == "") {
+                        initializeLog();
                         window1.state ="endtext";
                         audiostory.play();
                         return;
@@ -400,9 +425,6 @@ Rectangle {
                     }
 
                     if (window1.state == "shapeinstructions") {
-                        var date = new Date();
-                        window1.starttime = date.getTime();
-                        window1.logfilename = "shapes_matching_log_" + window1.starttime;
                         window1.state = "matching";
                     }
                     randomizeShapes();
@@ -557,6 +579,8 @@ Rectangle {
         }
 
 
+
+
     }
 
     ColumnLayout {
@@ -672,6 +696,8 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 12
 
+            property string gender: isFemale ? "female" : "male"
+
             Text {
                 color: "#ffffff"
                 text: "I am a"
@@ -734,6 +760,8 @@ Rectangle {
             visible: false
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 12
+
+            property int age: age.value
 
             Text {
                 id: blah
@@ -865,12 +893,52 @@ Rectangle {
 
                 if (window1.state === "questionaire2") {
                     window1.state = "greetings";
+                    saveQuestions();
                 }
             }
         }
     }
 
 
+
+    function initializeLog() {
+        var date = new Date();
+        window1.starttime = date.getTime();
+        window1.logfilename = window1.starttime + "_shapes_matching_log.csv";
+        window1.qlogfilename = window1.starttime + "_questions_log.csv";
+        fileio.write(window1.logfilename, "shape_matching_round,correct_match,reaction_time")
+        fileio.write(window1.qlogfilename, "starttime,tq1,tq2,tq3,tq4,tq5,tq6,tq7,tq8,gender,age,q1,q2,q3,q4,q5,q61,q62,q71,q72,q81,q82");
+    }
+
+    function saveQuestions() {
+        var log = new Array(window1.starttime,
+                        textquestion1.result,
+                        textquestion2.result,
+                        textquestion3.result,
+                        textquestion4.result,
+                        textquestion5.result,
+                        textquestion6.result,
+                        textquestion7.result,
+                        textquestion8.result,
+                        genderquestion.gender,
+                        agequestion.age,
+                        question1.result,
+                        question2.result,
+                        question3.result,
+                        question4.result,
+                        question5.result,
+                        question6.result,
+                        question6.result2,
+                        question7.result,
+                        question7.result2,
+                        question8.result,
+                        question8.result2);
+
+        print("Questions results:");
+        print(log.join(","));
+
+        fileio.write(window1.qlogfilename, log.join(","));
+    }
 
     function shapeClicked(shape, color) {
 
@@ -879,7 +947,7 @@ Rectangle {
         var d = new Date();
         var n = d.getTime();
 
-        var log = "";
+        var log = window1.count + ",";
 
         if (shape === targetimage.name && color !== targetimage.color) {
             print("Correct answer");
@@ -893,6 +961,7 @@ Rectangle {
         print("Reaction time: " + (n - window1.starttime) + "ms");
         log += (n - window1.starttime)
 
+        log += ",,,,,,,,,,,,,,,,,,,,,,"
         fileio.write(window1.logfilename, log);
 
         window1.starttime = n;
@@ -927,33 +996,33 @@ Rectangle {
 
         shuffle(possiblepairs)
 
-                shape1.color  = possiblepairs[0][0];
-                shape1.name  = possiblepairs[0][1];
+        shape1.color  = possiblepairs[0][0];
+        shape1.name  = possiblepairs[0][1];
 
-                shape2.color = possiblepairs[1][0];
-                shape2.name = possiblepairs[1][1];
+        shape2.color = possiblepairs[1][0];
+        shape2.name = possiblepairs[1][1];
 
-                shape3.color = possiblepairs[2][0];
-                shape3.name = possiblepairs[2][1];
+        shape3.color = possiblepairs[2][0];
+        shape3.name = possiblepairs[2][1];
 
-                shape4.color = possiblepairs[3][0];
-                shape4.name = possiblepairs[3][1];
+        shape4.color = possiblepairs[3][0];
+        shape4.name = possiblepairs[3][1];
 
-                shape5.color = possiblepairs[4][0];
-                shape5.name = possiblepairs[4][1];
+        shape5.color = possiblepairs[4][0];
+        shape5.name = possiblepairs[4][1];
 
-                shape6.color = possiblepairs[5][0];
-                shape6.name = possiblepairs[5][1];
+        shape6.color = possiblepairs[5][0];
+        shape6.name = possiblepairs[5][1];
 
-                shape7.color = possiblepairs[6][0];
-                shape7.name = possiblepairs[6][1];
+        shape7.color = possiblepairs[6][0];
+        shape7.name = possiblepairs[6][1];
 
-                shape8.color = possiblepairs[7][0];
-                shape8.name = possiblepairs[7][1];
+        shape8.color = possiblepairs[7][0];
+        shape8.name = possiblepairs[7][1];
 
 
-                targetimage.name = newSymbolTarget;
-                targetimage.color = newColorTarget;
+        targetimage.name = newSymbolTarget;
+        targetimage.color = newColorTarget;
 
 
 

@@ -16,7 +16,7 @@ Item {
 
     property bool answered: choiceGroup.current !== null
 
-    property int result: {if(choiceGroup.current) {result = choiceGroup.current.objectName;} else {result = "";}}
+    property string result: choiceGroup.current ? choiceGroup.current.result : ""
 
     ColumnLayout {
         id: question
@@ -41,6 +41,7 @@ Item {
 
             RadioButton {
                 id: answer1
+                property string result: "1"
                 exclusiveGroup: choiceGroup
                 style: RadioButtonStyle {
                     indicator: Rectangle {
@@ -68,6 +69,7 @@ Item {
 
             RadioButton {
                 id: answer2
+                property string result: "2"
                 exclusiveGroup: choiceGroup
                 style: answer1.style
             }
@@ -80,6 +82,7 @@ Item {
 
             RadioButton {
                 id: answer3
+                property string result: "3"
                 exclusiveGroup: choiceGroup
                                 style: answer1.style
             }
@@ -92,6 +95,7 @@ Item {
 
             RadioButton {
                 id: answer4
+                property string result: "4"
                 exclusiveGroup: choiceGroup
                                 style: answer1.style
             }

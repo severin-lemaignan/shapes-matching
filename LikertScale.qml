@@ -14,6 +14,9 @@ Item {
     property string minText: "Not at all"
     property string maxText: "Very much"
 
+    property int result: scale.value
+    property int result2: scale1.value
+
     onSubquestion1Changed: {
         if (subquestion1 === "") {
             subquestionText1.visible = false;
