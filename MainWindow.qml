@@ -412,7 +412,7 @@ Rectangle {
 
                 onClicked: {
                     if (window1.state == "") {
-                        initializeLog();
+                        initializeActivity();
                         window1.state ="endtext";
                         audiostory.play();
                         return;
@@ -763,6 +763,10 @@ Rectangle {
 
             property int age: age.value
 
+            function reset(){
+                age.value = 25;
+            }
+
             Text {
                 id: blah
                 color: "#ffffff"
@@ -866,6 +870,7 @@ Rectangle {
 
         Button {
             id: nextquestionsButton
+            opacity:1.0
             text: qsTr("Continue")
             anchors.horizontalCenter: parent.horizontalCenter
             style: ButtonStyle {
@@ -901,7 +906,27 @@ Rectangle {
 
 
 
-    function initializeLog() {
+    function initializeActivity() {
+
+        window1.count = 0;
+        textquestion1.reset();
+        textquestion2.reset();
+        textquestion3.reset();
+        textquestion4.reset();
+        textquestion5.reset();
+        textquestion6.reset();
+        textquestion7.reset();
+        textquestion8.reset();
+        agequestion.reset();
+        question1.reset();
+        question2.reset();
+        question3.reset();
+        question4.reset();
+        question5.reset();
+        question6.reset();
+        question7.reset();
+        question8.reset();
+
         var date = new Date();
         window1.starttime = date.getTime();
         window1.logfilename = window1.starttime + "_shapes_matching_log.csv";

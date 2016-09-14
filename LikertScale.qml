@@ -17,6 +17,11 @@ Item {
     property int result: scale.value
     property int result2: scale1.value
 
+    function reset() {
+        scale1.value = 3;
+        scale.value = 3;
+    }
+
     onSubquestion1Changed: {
         if (subquestion1 === "") {
             subquestionText1.visible = false;

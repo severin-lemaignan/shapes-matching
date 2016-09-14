@@ -18,6 +18,13 @@ Item {
 
     property string result: choiceGroup.current ? choiceGroup.current.result : ""
 
+    function reset() {
+        answer1.checked = false;
+        answer2.checked = false;
+        answer3.checked = false;
+        answer4.checked = false;
+    }
+
     ColumnLayout {
         id: question
         width: 1800
