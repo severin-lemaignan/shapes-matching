@@ -115,13 +115,13 @@ Rectangle {
             PropertyChanges {
                 target: instruction_text
                 height: 80
-                text: "You will next be shown shapes"
+                text: "Next, you will be shown shapes"
             }
 
             PropertyChanges {
                 target: instruction_text1
                 height: 91
-                text: "Click the image with the same shape as the model, but a different colour"
+                text: "Tap the picture with the same shape but a different colour than the target"
             }
 
             PropertyChanges {
@@ -142,15 +142,11 @@ Rectangle {
 
             PropertyChanges {
                 target: instruction_text
-                height: 80
-                text: "You will next be shown shapes"
                 visible: false
             }
 
             PropertyChanges {
                 target: instruction_text1
-                height: 91
-                text: "Click the picture with the same shape but a different colour"
                 visible: false
             }
 
@@ -303,9 +299,24 @@ Rectangle {
                 target: textquestion3
                 visible: true
             }
-
             PropertyChanges {
                 target: textquestion4
+                visible: true
+            }
+            PropertyChanges {
+                target: textquestion5
+                visible: true
+            }
+            PropertyChanges {
+                target: textquestion6
+                visible: true
+            }
+            PropertyChanges {
+                target: textquestion7
+                visible: true
+            }
+            PropertyChanges {
+                target: textquestion8
                 visible: true
             }
         }
@@ -570,38 +581,79 @@ Rectangle {
         MultipleChoice {
             id: textquestion1
             visible: false
-            question: "What is the age of the capitain?"
-            answer1: "12"
-            answer2: "13"
-            answer3: "126"
-            answer4: "55"
+            question: "What was the name of Australia before the European invasion? "
+            answer1: "New Britain"
+            answer2: "New Holland"
+            answer3: "Oceania"
+            answer4: "New York"
         }
         MultipleChoice {
             id: textquestion2
             visible: false
-            question: "What is the age of the capitain?"
-            answer1: "12"
-            answer2: "13"
-            answer3: "126"
-            answer4: "55"
+            question: "How many people were initially transferred by ships to Australia?"
+            answer1: "1000"
+            answer2: "1500"
+            answer3: "2000"
+            answer4: "2500"
         }
         MultipleChoice {
             id: textquestion3
             visible: false
-            question: "What is the age of the capitain?"
-            answer1: "12"
-            answer2: "13"
-            answer3: "126"
-            answer4: "55"
+            question: "What was the ratio between men and women in the early 1800s? "
+            answer1: "5 to 1"
+            answer2: "5 to 2"
+            answer3: "5 to 3"
+            answer4: "5 to 4"
         }
         MultipleChoice {
             id: textquestion4
             visible: false
-            question: "What is the age of the capitain?"
-            answer1: "12"
-            answer2: "13"
-            answer3: "126"
-            answer4: "55"
+            question: "What was the name of the captain who sailed to Australia and claimed it as Britain?"
+            answer1: "Captain Jack Blackman"
+            answer2: "Captain Billy Murdoch"
+            answer3: "Captain James Cook"
+            answer4: "Captain Matthew Freeman"
+
+        }
+        MultipleChoice {
+            id: textquestion5
+            visible: false
+            question: "Which year did the first fleet of 11 ships arrived at Australia?"
+            answer1: "1731"
+            answer2: "1771"
+            answer3: "1782"
+            answer4: "1788"
+
+        }
+        MultipleChoice {
+            id: textquestion6
+            visible: false
+            question: "What news attracted more British migrants? "
+            answer1: "Free land"
+            answer2: "Plentiful work"
+            answer3: "Good weather"
+            answer4: "Rewards"
+
+        }
+        MultipleChoice {
+            id: textquestion7
+            visible: false
+            question: "Which port was used to settle Melbourne?"
+            answer1: "Port of Eden"
+            answer2: "Port Phillip Bay"
+            answer3: "Port Batemans Bay"
+            answer4: "Coffs Harbour"
+
+        }
+        MultipleChoice {
+            id: textquestion8
+            visible: false
+            question: "Which century did Europeans sail first for Australia?"
+            answer1: "14th"
+            answer2: "15th"
+            answer3: "16th"
+            answer4: "17th"
+
         }
 
         Column {
@@ -744,15 +796,15 @@ Rectangle {
         LikertScale {
             id: question5
             visible: false
-            question: "How important did you feel it was for you to do well in the experiment"
+            question: "I felt it was important to do well in the experiment"
         }
 
         LikertScale {
             id: question6
             visible: false
-            question: "How difficult was"
-            subquestion1: "the shape-matching task:"
-            subquestion2: "answering the questions on the text:"
+            question: "How difficult was..."
+            subquestion1: "the shape-matching task?"
+            subquestion2: "answering the questions on the text?"
             minText: "Easy"
             maxText: "Difficult"
         }
@@ -760,7 +812,7 @@ Rectangle {
         LikertScale {
             id: question7
             visible: false
-            question: "How well do you think you performed on"
+            question: "I felt I performed well on..."
             subquestion1: "the shape-matching task:"
             subquestion2: "answering the questions on the text:"
             minText: "Not well"
@@ -770,7 +822,7 @@ Rectangle {
         LikertScale {
             id: question8
             visible: false
-            question: "How much did you enjoy"
+            question: "I enjoyed..."
             subquestion1: "the shape-matching task:"
             subquestion2: "answering the questions on the text:"
         }
