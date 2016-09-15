@@ -935,11 +935,12 @@ Rectangle {
         window1.logfilename = window1.starttime + "_shapes_matching_log.csv";
         window1.qlogfilename = window1.starttime + "_questions_log.csv";
         fileio.write(window1.logfilename, "shape_matching_round,correct_match,reaction_time")
-        fileio.write(window1.qlogfilename, "starttime,tq1,tq2,tq3,tq4,tq5,tq6,tq7,tq8,gender,age,q1,q2,q3,q4,q5,q61,q62,q71,q72,q81,q82");
+        fileio.write(window1.qlogfilename, "starttime,endtime,tq1,tq2,tq3,tq4,tq5,tq6,tq7,tq8,gender,age,q1,q2,q3,q4,q5,q61,q62,q71,q72,q81,q82");
     }
 
     function saveQuestions() {
         var log = new Array(window1.starttime,
+                    date.getTime(),
                     textquestion1.result,
                     textquestion2.result,
                     textquestion3.result,
