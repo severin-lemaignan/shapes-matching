@@ -597,12 +597,12 @@ Rectangle {
 
         onFirstBlockAnsweredChanged: {
             if (window1.state === "textquestions") {
-            nextquestionsButton.opacity = (firstBlockAnswered ? 1.0 : 0.0);
+                nextquestionsButton.opacity = (firstBlockAnswered ? 1.0 : 0.0);
             }
         }
         property bool secondBlockAnswered: textquestion5.answered &&
-        textquestion6.answered && textquestion7.answered &&
-        textquestion8.answered
+                           textquestion6.answered && textquestion7.answered &&
+                           textquestion8.answered
 
         onSecondBlockAnsweredChanged: {
             if (window1.state === "textquestions2") {
@@ -937,27 +937,27 @@ Rectangle {
 
     function saveQuestions() {
         var log = new Array(window1.starttime,
-                        textquestion1.result,
-                        textquestion2.result,
-                        textquestion3.result,
-                        textquestion4.result,
-                        textquestion5.result,
-                        textquestion6.result,
-                        textquestion7.result,
-                        textquestion8.result,
-                        genderquestion.gender,
-                        agequestion.age,
-                        question1.result,
-                        question2.result,
-                        question3.result,
-                        question4.result,
-                        question5.result,
-                        question6.result,
-                        question6.result2,
-                        question7.result,
-                        question7.result2,
-                        question8.result,
-                        question8.result2);
+                    textquestion1.result,
+                    textquestion2.result,
+                    textquestion3.result,
+                    textquestion4.result,
+                    textquestion5.result,
+                    textquestion6.result,
+                    textquestion7.result,
+                    textquestion8.result,
+                    genderquestion.gender,
+                    agequestion.age,
+                    question1.result,
+                    question2.result,
+                    question3.result,
+                    question4.result,
+                    question5.result,
+                    question6.result,
+                    question6.result2,
+                    question7.result,
+                    question7.result2,
+                    question8.result,
+                    question8.result2);
 
         print("Questions results:");
         print(log.join(","));
@@ -1004,7 +1004,7 @@ Rectangle {
         var newColorTarget = colors[Math.floor(Math.random()*colors.length)];
 
         var possiblepairs = [[newColorTarget, newSymbolTarget],
-                             [getRandom(colors, newColorTarget), newSymbolTarget]
+                     [getRandom(colors, newColorTarget), newSymbolTarget]
                 ]
 
         // The remaining symbols are all symbols except the new target symbol

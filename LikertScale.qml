@@ -79,7 +79,7 @@ Item {
 
                 Text {
                     id: minText1
-                color: "#b4b4b4"
+                    color: "#b4b4b4"
                     text: likertscale.minText
                     font.pixelSize: 30
                 }
@@ -110,7 +110,7 @@ Item {
 
                 Text {
                     id: maxText1
-                color: "#b4b4b4"
+                    color: "#b4b4b4"
                     text: likertscale.maxText
                     font.pixelSize: 30
                 }
@@ -134,7 +134,7 @@ Item {
                 id: row4
                 Text {
                     id: minText2
-                color: "#b4b4b4"
+                    color: "#b4b4b4"
                     text: likertscale.minText
                     font.pixelSize: 30
                 }
@@ -152,7 +152,7 @@ Item {
 
                 Text {
                     id: maxText2
-                color: "#b4b4b4"
+                    color: "#b4b4b4"
                     text: likertscale.maxText
                     font.pixelSize: 30
                 }

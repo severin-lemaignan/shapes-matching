@@ -91,7 +91,7 @@ Item {
                 id: answer3
                 property string result: "3"
                 exclusiveGroup: choiceGroup
-                                style: answer1.style
+                style: answer1.style
             }
 
             Text {
@@ -104,7 +104,7 @@ Item {
                 id: answer4
                 property string result: "4"
                 exclusiveGroup: choiceGroup
-                                style: answer1.style
+                style: answer1.style
             }
 
         }
