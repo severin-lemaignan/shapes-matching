@@ -21,11 +21,11 @@ Rectangle {
     property string qlogfilename: ""
 
     onCountChanged: {
-        if (count == 10) {
+        if (count == 75) {
             giveupButton.visible = true;
         }
 
-        if (count >= 20) {
+        if (count >= 200) {
             state = "textquestions";
         }
     }
@@ -369,7 +369,7 @@ Rectangle {
                 width: 706
                 height: 182
                 color: "#ffffff"
-                text: "You will first listen to a short text"
+                text: "You will first listen to a short text about the history of Australia"
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -391,13 +391,13 @@ Rectangle {
             Audio {
                 id: audiostory
                 source: "audio/story.mp3"
-                onPlaying: {continueButton.visible = true;}
-                //onStopped: {continueButton.visible = true;}
+                //onPlaying: {continueButton.visible = true;}
+                onStopped: {continueButton.visible = true;}
             }
 
             Button {
                 id: continueButton
-                width: 300
+                width: 400
                 text: qsTr("Listen")
                 anchors.horizontalCenter: parent.horizontalCenter
                 style: ButtonStyle {
