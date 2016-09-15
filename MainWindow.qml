@@ -504,8 +504,8 @@ Rectangle {
             Button {
                 id: giveupButton
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.right: parent.right
-                anchors.rightMargin: 40
+                anchors.left: parent.left
+                anchors.leftMargin: 40
                 width:400
                 text: "Give up"
                 style: ButtonStyle {
