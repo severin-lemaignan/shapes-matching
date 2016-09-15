@@ -103,6 +103,20 @@ Item {
                             color: "#777"
                             width: parent.width
                             height:10
+                            radius: height/2
+                        }
+                        tickmarks: Repeater {
+                            id: repeater
+                            model: control.stepSize > 0 ? 1 + (control.maximumValue - control.minimumValue) / control.stepSize : 0
+                            width: control.width
+                            height: control.height
+                            Rectangle {
+                                color: "#999"
+                                width: 16 ; height: width; radius: width/2
+                                y: control.height - 10
+                                x: (repeater.width/(repeater.count - 1) * index) - radius
+                                opacity: control.enabled ? 1 : 0.6
+                            }
                         }
                     }
 
