@@ -698,7 +698,7 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 12
 
-            property string gender: isFemale ? "female" : "male"
+            property string gender: isFemale.checked ? "female" : "male"
 
             Text {
                 color: "#ffffff"
