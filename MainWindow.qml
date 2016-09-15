@@ -28,6 +28,8 @@ Rectangle {
         }
 
         if (count >= 200) {
+            var date = new Date();
+            questions.starttimeTestQuestions = date.getTime();
             state = "textquestions";
         }
     }
@@ -428,6 +430,9 @@ Rectangle {
                     }
 
                     if (window1.state == "shapeinstructions") {
+                        var date = new Date();
+                        shapes.starttime = date.getTime();
+                        shapes.prevtime = shapes.starttime;
                         window1.state = "matching";
                     }
                     randomizeShapes();
@@ -481,6 +486,9 @@ Rectangle {
         visible: false
         anchors.fill: parent
 
+        property double starttime: 0
+        property double prevtime: 0
+
 
 
         Rectangle {
@@ -518,7 +526,11 @@ Rectangle {
                         text: giveupButton.text
                     }
                 }
-                onClicked: window1.state = "textquestions"
+                onClicked: {
+                    var date = new Date();
+                    questions.starttimeTestQuestions = date.getTime();
+                    window1.state = "textquestions"
+                }
             }
         }
 
@@ -612,6 +624,9 @@ Rectangle {
                 nextquestionsButton.opacity = (secondBlockAnswered ? 1.0 : 0.0);
             }
         }
+
+        property double starttimeTestQuestions: 0
+        property double starttimeQuestionaire: 0
 
         MultipleChoice {
             id: textquestion1
@@ -892,6 +907,8 @@ Rectangle {
                 }
                 if (window1.state === "textquestions2") {
                     window1.state = "questionaire";
+                    var date = new Date();
+                    questions.starttimeQuestionaire = date.getTime();
                     return;
                 }
                 if (window1.state === "questionaire") {
@@ -900,8 +917,8 @@ Rectangle {
                 }
 
                 if (window1.state === "questionaire2") {
-                    window1.state = "greetings";
                     saveQuestions();
+                    window1.state = "greetings";  
                 }
             }
         }
@@ -936,12 +953,14 @@ Rectangle {
         window1.logfilename = window1.starttime + "_shapes_matching_log.csv";
         window1.qlogfilename = window1.starttime + "_questions_log.csv";
         fileio.write(window1.logfilename, "shape_matching_round,correct_match,reaction_time")
-        fileio.write(window1.qlogfilename, "starttime,endtime,tq1,tq2,tq3,tq4,tq5,tq6,tq7,tq8,gender,age,q1,q2,q3,q4,q5,q61,q62,q71,q72,q81,q82");
+        fileio.write(window1.qlogfilename, "starttime,start_shape_matching,start_text_questions,tq1,tq2,tq3,tq4,tq5,tq6,tq7,tq8,start_questionaire,gender,age,q1,q2,q3,q4,q5,q61,q62,q71,q72,q81,q82,endtime");
     }
 
     function saveQuestions() {
+        var date = new Date();
         var log = new Array(window1.starttime,
-                    date.getTime(),
+                    shapes.starttime,
+                    questions.starttimeTestQuestions,
                     textquestion1.result,
                     textquestion2.result,
                     textquestion3.result,
@@ -950,6 +969,7 @@ Rectangle {
                     textquestion6.result,
                     textquestion7.result,
                     textquestion8.result,
+                    questions.starttimeQuestionaire,
                     genderquestion.gender,
                     agequestion.age,
                     question1.result,
@@ -962,7 +982,8 @@ Rectangle {
                     question7.result,
                     question7.result2,
                     question8.result,
-                    question8.result2);
+                    question8.result2,
+                    date.getTime());
 
         print("Questions results:");
         print(log.join(","));
@@ -988,13 +1009,13 @@ Rectangle {
 
         }
 
-        print("Reaction time: " + (n - window1.starttime) + "ms");
-        log += (n - window1.starttime)
+        print("Reaction time: " + (n - shapes.prevtime) + "ms");
+        log += (n - shapes.prevtime)
 
         log += ",,,,,,,,,,,,,,,,,,,,,,"
         fileio.write(window1.logfilename, log);
 
-        window1.starttime = n;
+        shapes.prevtime = n;
 
         randomizeShapes();
 
