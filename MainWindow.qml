@@ -20,6 +20,8 @@ Rectangle {
     property string logfilename: ""
     property string qlogfilename: ""
 
+    property int seed: 1
+
     onCountChanged: {
         if (count == 75) {
             giveupButton.visible = true;
@@ -908,6 +910,7 @@ Rectangle {
 
     function initializeActivity() {
 
+        window1.seed = 1;
         window1.count = 0;
         textquestion1.reset();
         textquestion2.reset();
@@ -1053,9 +1056,16 @@ Rectangle {
 
     }
 
+    // use custom random generator that is seedable
+    // taken from http://stackoverflow.com/questions/521295/javascript-random-seeds
+    function random() {
+        var x = Math.sin(window1.seed++) * 10000;
+        return x - Math.floor(x);
+    }
+
     function getRandom(list,differentFrom) {
 
-        var elem = list[Math.floor(Math.random()*list.length)];
+        var elem = list[Math.floor(random()*list.length)];
 
 
         if (typeof differentFrom === 'undefined') return elem;
@@ -1073,7 +1083,7 @@ Rectangle {
         while (0 !== currentIndex) {
 
             // Pick a remaining element...
-            randomIndex = Math.floor(Math.random() * currentIndex);
+            randomIndex = Math.floor(random() * currentIndex);
             currentIndex -= 1;
 
             // And swap it with the current element.
