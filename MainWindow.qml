@@ -395,6 +395,7 @@ Rectangle {
                 source: "audio/story.mp3"
                 //onPlaying: {continueButton.visible = true;}
                 onStopped: {continueButton.visible = true;}
+                volume: 0.7
             }
 
             Button {
