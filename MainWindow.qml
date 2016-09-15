@@ -1005,8 +1005,8 @@ Rectangle {
         var colors = ["white", "green", "purple", "red", "blue", "yellow"];
         var symbols = ["cross", "square", "circle", "star","cross", "square", "circle", "star"];
 
-        var newSymbolTarget = symbols[Math.floor(Math.random()*symbols.length)];
-        var newColorTarget = colors[Math.floor(Math.random()*colors.length)];
+        var newSymbolTarget = symbols[Math.floor(random()*symbols.length)];
+        var newColorTarget = colors[Math.floor(random()*colors.length)];
 
         var possiblepairs = [[newColorTarget, newSymbolTarget],
                      [getRandom(colors, newColorTarget), newSymbolTarget]
