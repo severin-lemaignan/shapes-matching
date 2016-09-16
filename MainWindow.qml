@@ -22,15 +22,19 @@ Rectangle {
 
     property int seed: 1
 
+    Component.onCompleted: {
+        initializeActivity();
+    }
+
     onCountChanged: {
-        if (count == 75) {
+        if (count == 5) {
             giveupButton.visible = true;
         }
 
-        if (count >= 200) {
+        if (count >= 20) {
             var date = new Date();
             questions.starttimeTestQuestions = date.getTime();
-            state = "textquestions";
+            state = "shapecountestimation";
         }
     }
 
@@ -66,15 +70,25 @@ Rectangle {
             }
 
             PropertyChanges {
-                target: button1
-                text: qsTr("Give up")
-                visible: true
-            }
-
-            PropertyChanges {
                 target: giveupButton
                 anchors.rightMargin: 125
                 visible: false
+            }
+        },
+        State {
+            name: "shapecountestimation"
+            PropertyChanges {
+                target: instructions
+                visible: false
+
+            }
+            PropertyChanges {
+                target: questions
+                visible: true
+            }
+           PropertyChanges {
+                target: howmanyshapesquestion
+                visible: true
             }
         },
         State {
@@ -133,6 +147,7 @@ Rectangle {
                 target: instruction_text1
                 height: 91
                 text: "Tap the picture with the same shape but a different colour than the target"
+                visible: true
             }
 
             PropertyChanges {
@@ -319,6 +334,28 @@ Rectangle {
                 target: textquestion8
                 visible: true
             }
+        },
+        State {
+            name: "textintroduction"
+
+            PropertyChanges {
+                target: shapes
+                anchors.topMargin: 0
+                anchors.leftMargin: 0
+                anchors.bottomMargin: 0
+                anchors.rightMargin: 0
+            }
+
+            PropertyChanges {
+                target: instruction_text1
+                text: "You will now listen to a short text about the history of Australia"
+                visible: true
+            }
+
+            PropertyChanges {
+                target: instruction_text
+                visible: false
+            }
         }
 
     ]
@@ -331,7 +368,7 @@ Rectangle {
         anchors.topMargin: 0
         anchors.horizontalCenter: parent.horizontalCenter
         visible: false
-        onClicked: window1.state = ""
+        onClicked: initializeActivity()
 
         Rectangle {
             id: rectangle1
@@ -344,7 +381,6 @@ Rectangle {
         id: instructions
         color: "#000000"
         anchors.fill: parent
-        visible: true
 
 
         ColumnLayout {
@@ -374,6 +410,7 @@ Rectangle {
                 height: 182
                 color: "#ffffff"
                 text: "You will first listen to a short text about the history of Australia"
+                visible: false
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
                 anchors.horizontalCenter: parent.horizontalCenter
@@ -395,7 +432,7 @@ Rectangle {
             Audio {
                 id: audiostory
                 source: "audio/story.mp3"
-                //onPlaying: {continueButton.visible = true;}
+                onPlaying: {continueButton.visible = true;}
                 onStopped: {continueButton.visible = true;}
                 volume: 0.7
             }
@@ -403,7 +440,7 @@ Rectangle {
             Button {
                 id: continueButton
                 width: 400
-                text: qsTr("Listen")
+                text: qsTr("Start")
                 anchors.horizontalCenter: parent.horizontalCenter
                 style: ButtonStyle {
                     label: Text {
@@ -417,14 +454,17 @@ Rectangle {
 
                 onClicked: {
                     if (window1.state == "") {
-                        initializeActivity();
+                        window1.state ="shapeinstructions";
+                        return;
+                    }
+                    if (window1.state == "textintroduction") {
                         window1.state ="endtext";
                         audiostory.play();
                         return;
                     }
 
                     if (window1.state == "endtext") {
-                        window1.state ="shapeinstructions";
+                        window1.state ="textquestions";
                         audiostory.stop();
                         return;
                     }
@@ -529,7 +569,7 @@ Rectangle {
                 onClicked: {
                     var date = new Date();
                     questions.starttimeTestQuestions = date.getTime();
-                    window1.state = "textquestions"
+                    window1.state = "shapecountestimation"
                 }
             }
         }
@@ -615,6 +655,7 @@ Rectangle {
                 nextquestionsButton.opacity = (firstBlockAnswered ? 1.0 : 0.0);
             }
         }
+
         property bool secondBlockAnswered: textquestion5.answered &&
                            textquestion6.answered && textquestion7.answered &&
                            textquestion8.answered
@@ -627,6 +668,62 @@ Rectangle {
 
         property double starttimeTestQuestions: 0
         property double starttimeQuestionaire: 0
+
+
+        Column {
+            id: howmanyshapesquestion
+            width: 900
+            visible: false
+            anchors.horizontalCenter: parent.horizontalCenter
+            spacing: 12
+
+            property int count: shapecount.value
+
+            function reset(){
+                shapecount.value = 0;
+            }
+
+            Text {
+                id: shapecountlabel
+                color: "#ffffff"
+                text: "How many shapes matching rounds do you think you did?"
+                font.pixelSize: 50
+            }
+            Row {
+                spacing:40
+                Slider {
+                    id: shapecount
+                    width: 1000
+                    tickmarksEnabled: false
+                    minimumValue: 0
+                    value: 0
+                    stepSize: 10
+                    maximumValue: 300
+                    style: SliderStyle {
+                        handle: Rectangle {
+                            width: 60
+                            height: width
+                            radius: width/2
+                            color: "#fff"
+                        }
+                        groove: Rectangle {
+                            color: "#777"
+                            width: parent.width
+                            height:10
+                            radius:height/2
+                        }
+                    }
+
+                }
+
+                Text {
+                    text: shapecount.value
+                    color: "#aaa"
+                    font.pixelSize: 40
+                }
+            }
+
+        }
 
         MultipleChoice {
             id: textquestion1
@@ -786,7 +883,7 @@ Rectangle {
             }
 
             Text {
-                id: blah
+                id: agelabel
                 color: "#ffffff"
                 text: "My age"
                 font.pixelSize: 50
@@ -812,6 +909,7 @@ Rectangle {
                             color: "#777"
                             width: parent.width
                             height:10
+                            radius: height/2
                         }
                     }
 
@@ -901,6 +999,10 @@ Rectangle {
                 }
             }
             onClicked: {
+                if (window1.state === "shapecountestimation") {
+                    window1.state = "textintroduction";
+                    return;
+                }
                 if (window1.state === "textquestions") {
                     window1.state = "textquestions2";
                     return;
@@ -928,8 +1030,10 @@ Rectangle {
 
     function initializeActivity() {
 
+        print("Initializing the activity...")
         window1.seed = 1;
         window1.count = 0;
+        howmanyshapesquestion.reset();
         textquestion1.reset();
         textquestion2.reset();
         textquestion3.reset();
@@ -948,18 +1052,26 @@ Rectangle {
         question7.reset();
         question8.reset();
 
+        instruction_text.visible = true;
+
+        window1.state = "";
+
         var date = new Date();
         window1.starttime = date.getTime();
         window1.logfilename = window1.starttime + "_shapes_matching_log.csv";
         window1.qlogfilename = window1.starttime + "_questions_log.csv";
         fileio.write(window1.logfilename, "shape_matching_round,correct_match,reaction_time")
-        fileio.write(window1.qlogfilename, "starttime,start_shape_matching,start_text_questions,tq1,tq2,tq3,tq4,tq5,tq6,tq7,tq8,start_questionaire,gender,age,q1,q2,q3,q4,q5,q61,q62,q71,q72,q81,q82,endtime");
+        fileio.write(window1.qlogfilename, "starttime,start_shape_matching,shapes_count,shapes_estimate,start_text_questions,tq1,tq2,tq3,tq4,tq5,tq6,tq7,tq8,start_questionaire,gender,age,q1,q2,q3,q4,q5,q61,q62,q71,q72,q81,q82,endtime");
+
+        print("Activity and logs initialized.")
     }
 
     function saveQuestions() {
         var date = new Date();
         var log = new Array(window1.starttime,
                     shapes.starttime,
+                    window1.count,
+                    howmanyshapesquestion.count,
                     questions.starttimeTestQuestions,
                     textquestion1.result,
                     textquestion2.result,

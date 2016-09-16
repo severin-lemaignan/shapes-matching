@@ -23,6 +23,7 @@ Item {
         answer2.checked = false;
         answer3.checked = false;
         answer4.checked = false;
+        choiceGroup.current = null;
     }
 
     ColumnLayout {
