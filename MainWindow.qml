@@ -733,6 +733,7 @@ Rectangle {
             answer2: "New Holland"
             answer3: "New Australia"
             answer4: "New York"
+            rightanswer: "2"
         }
         MultipleChoice {
             id: textquestion2
@@ -742,6 +743,7 @@ Rectangle {
             answer2: "1500"
             answer3: "2000"
             answer4: "2500"
+            rightanswer: "2"
         }
         MultipleChoice {
             id: textquestion3
@@ -751,6 +753,7 @@ Rectangle {
             answer2: "5 to 2"
             answer3: "5 to 3"
             answer4: "5 to 4"
+            rightanswer: "1"
         }
         MultipleChoice {
             id: textquestion4
@@ -760,6 +763,7 @@ Rectangle {
             answer2: "Squatter"
             answer3: "Foreigner"
             answer4: "Expat"
+            rightanswer: "2"
 
 
         }
@@ -771,6 +775,7 @@ Rectangle {
             answer2: "2459"
             answer3: "2462"
             answer4: "2469"
+            rightanswer: "3"
 
         }
         MultipleChoice {
@@ -781,6 +786,7 @@ Rectangle {
             answer2: "Plentiful work"
             answer3: "Cheap houses"
             answer4: "Rewards"
+            rightanswer: "2"
 
         }
         MultipleChoice {
@@ -788,9 +794,10 @@ Rectangle {
             visible: false
             question: "Which port was used to settle Springland?"
             answer1: "Port of Eden"
-            answer2: "Port Danford"
+            answer2: "Port Kembia"
             answer3: "Port Batemans Bay"
-            answer4: "Port Kembia"
+            answer4: "Port Danford"
+            rightanswer: "4"
 
         }
         MultipleChoice {
@@ -801,6 +808,7 @@ Rectangle {
             answer2: "22nd"
             answer3: "23rd"
             answer4: "24th"
+            rightanswer: "4"
 
         }
 
@@ -1061,7 +1069,7 @@ Rectangle {
         window1.logfilename = window1.starttime + "_shapes_matching_log.csv";
         window1.qlogfilename = window1.starttime + "_questions_log.csv";
         fileio.write(window1.logfilename, "shape_matching_round,correct_match,reaction_time")
-        fileio.write(window1.qlogfilename, "starttime,start_shape_matching,shapes_count,shapes_estimate,start_text_questions,tq1,tq2,tq3,tq4,tq5,tq6,tq7,tq8,start_questionaire,gender,age,q1,q2,q3,q4,q5,q61,q62,q71,q72,q81,q82,endtime");
+        fileio.write(window1.qlogfilename, "starttime,start_shape_matching,shapes_count,shapes_estimate,start_text_questions,tq1,tq1c,tq2,tq2c,tq3,tq3c,tq4,tq4c,tq5,tq5c,tq6,tq6c,tq7,tq7c,tq8,tq8c,start_questionaire,gender,age,q1,q2,q3,q4,q5,q61,q62,q71,q72,q81,q82,endtime");
 
         print("Activity and logs initialized.")
     }
@@ -1074,13 +1082,21 @@ Rectangle {
                     howmanyshapesquestion.count,
                     questions.starttimeTestQuestions,
                     textquestion1.result,
+                    textquestion1.correct,
                     textquestion2.result,
+                    textquestion2.correct,
                     textquestion3.result,
+                    textquestion3.correct,
                     textquestion4.result,
+                    textquestion4.correct,
                     textquestion5.result,
+                    textquestion5.correct,
                     textquestion6.result,
+                    textquestion6.correct,
                     textquestion7.result,
+                    textquestion7.correct,
                     textquestion8.result,
+                    textquestion8.correct,
                     questions.starttimeQuestionaire,
                     genderquestion.gender,
                     agequestion.age,

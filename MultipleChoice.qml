@@ -13,10 +13,13 @@ Item {
     property string answer2: "Answer 2"
     property string answer3: "Answer 3"
     property string answer4: "Answer 4"
+    property string rightanswer: "1"
 
     property bool answered: choiceGroup.current !== null
 
     property string result: choiceGroup.current ? choiceGroup.current.result : ""
+
+    property bool correct: choiceGroup.current ? (result === rightanswer) : false
 
     function reset() {
         answer1.checked = false;
