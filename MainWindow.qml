@@ -348,7 +348,7 @@ Rectangle {
 
             PropertyChanges {
                 target: instruction_text1
-                text: "You will now listen to a short text about the history of Australia"
+                text: "You will now listen to a short text about the history of fictional Brookland"
                 visible: true
             }
 
@@ -409,7 +409,7 @@ Rectangle {
                 width: 706
                 height: 182
                 color: "#ffffff"
-                text: "You will first listen to a short text about the history of Australia"
+                text: "You will now listen to a short text about the history of fictional Brookland"
                 visible: false
                 font.bold: true
                 horizontalAlignment: Text.AlignHCenter
@@ -728,16 +728,16 @@ Rectangle {
         MultipleChoice {
             id: textquestion1
             visible: false
-            question: "What was the name of Australia before the European invasion? "
+            question: "What was the name of Brookland before the American invasion? "
             answer1: "New Britain"
             answer2: "New Holland"
-            answer3: "Oceania"
+            answer3: "New Australia"
             answer4: "New York"
         }
         MultipleChoice {
             id: textquestion2
             visible: false
-            question: "How many people were initially transferred by ships to Australia?"
+            question: "How many people were initially transferred by ships to Brookland?"
             answer1: "1000"
             answer2: "1500"
             answer3: "2000"
@@ -746,7 +746,7 @@ Rectangle {
         MultipleChoice {
             id: textquestion3
             visible: false
-            question: "What was the ratio between men and women in the early 1800s? "
+            question: "What was the ratio between men and women in the early 2500s? "
             answer1: "5 to 1"
             answer2: "5 to 2"
             answer3: "5 to 3"
@@ -755,52 +755,52 @@ Rectangle {
         MultipleChoice {
             id: textquestion4
             visible: false
-            question: "What was the name of the captain who sailed to Australia and claimed it as Britain?"
-            answer1: "Captain Jack Blackman"
-            answer2: "Captain Billy Murdoch"
-            answer3: "Captain James Cook"
-            answer4: "Captain Matthew Freeman"
+            question: "What is the word used to describe the migrants that fled to Brookland to work?"
+            answer1: "Scrounger"
+            answer2: "Squatter"
+            answer3: "Foreigner"
+            answer4: "Expat"
 
 
         }
         MultipleChoice {
             id: textquestion5
             visible: false
-            question: "Which year did the first fleet of 11 ships arrived at Australia?"
-            answer1: "1731"
-            answer2: "1771"
-            answer3: "1782"
-            answer4: "1788"
+            question: "Which year did the first fleet of 11 ships arrive in Brookland?"
+            answer1: "2452"
+            answer2: "2459"
+            answer3: "2462"
+            answer4: "2469"
 
         }
         MultipleChoice {
             id: textquestion6
             visible: false
-            question: "What news attracted more British migrants? "
+            question: "What news attracted more American migrants? "
             answer1: "Free land"
             answer2: "Plentiful work"
-            answer3: "Good weather"
+            answer3: "Cheap houses"
             answer4: "Rewards"
 
         }
         MultipleChoice {
             id: textquestion7
             visible: false
-            question: "Which port was used to settle Melbourne?"
+            question: "Which port was used to settle Springland?"
             answer1: "Port of Eden"
-            answer2: "Port Phillip Bay"
+            answer2: "Port Danford"
             answer3: "Port Batemans Bay"
-            answer4: "Coffs Harbour"
+            answer4: "Port Kembia"
 
         }
         MultipleChoice {
             id: textquestion8
             visible: false
-            question: "Which century did Europeans sail first for Australia?"
-            answer1: "14th"
-            answer2: "15th"
-            answer3: "16th"
-            answer4: "17th"
+            question: "Which century did Americans sail first for Brookland?"
+            answer1: "21st"
+            answer2: "22nd"
+            answer3: "23rd"
+            answer4: "24th"
 
         }
 
