@@ -27,11 +27,11 @@ Rectangle {
     }
 
     onCountChanged: {
-        if (count == 5) {
+        if (count == 75) {
             giveupButton.visible = true;
         }
 
-        if (count >= 20) {
+        if (count >= 200) {
             var date = new Date();
             questions.starttimeTestQuestions = date.getTime();
             state = "shapecountestimation";
@@ -432,7 +432,7 @@ Rectangle {
             Audio {
                 id: audiostory
                 source: "audio/story.mp3"
-                onPlaying: {continueButton.visible = true;}
+                //onPlaying: {continueButton.visible = true;}
                 onStopped: {continueButton.visible = true;}
                 volume: 0.7
             }
