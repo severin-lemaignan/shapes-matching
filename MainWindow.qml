@@ -262,6 +262,10 @@ Rectangle {
                 target: question8
                 visible: true
             }
+            PropertyChanges {
+                target: familiaquestion
+                visible: true
+            }
 
         },
         State {
@@ -992,6 +996,14 @@ Rectangle {
             subquestion2: "answering the questions on the text:"
         }
 
+        LikertScale {
+            id: familiaquestion
+            visible: false
+            question: "I am familiar with human-like robots..."
+            minText: "Not at all"
+            maxText: "Very familiar"
+        }
+
         Button {
             id: nextquestionsButton
             opacity:1.0
@@ -1059,6 +1071,7 @@ Rectangle {
         question6.reset();
         question7.reset();
         question8.reset();
+        familiaquestion.reset();
 
         instruction_text.visible = true;
 
@@ -1069,7 +1082,7 @@ Rectangle {
         window1.logfilename = window1.starttime + "_shapes_matching_log.csv";
         window1.qlogfilename = window1.starttime + "_questions_log.csv";
         fileio.write(window1.logfilename, "shape_matching_round,correct_match,reaction_time")
-        fileio.write(window1.qlogfilename, "starttime,start_shape_matching,shapes_count,shapes_estimate,start_text_questions,tq1,tq1c,tq2,tq2c,tq3,tq3c,tq4,tq4c,tq5,tq5c,tq6,tq6c,tq7,tq7c,tq8,tq8c,start_questionaire,gender,age,q1,q2,q3,q4,q5,q61,q62,q71,q72,q81,q82,endtime");
+        fileio.write(window1.qlogfilename, "starttime,start_shape_matching,shapes_count,shapes_estimate,start_text_questions,tq1,tq1c,tq2,tq2c,tq3,tq3c,tq4,tq4c,tq5,tq5c,tq6,tq6c,tq7,tq7c,tq8,tq8c,start_questionaire,gender,age,q1,q2,q3,q4,q5,q61,q62,q71,q72,q81,q82,familiarity,endtime");
 
         print("Activity and logs initialized.")
     }
@@ -1111,6 +1124,7 @@ Rectangle {
                     question7.result2,
                     question8.result,
                     question8.result2,
+                    familiaquestion.result,
                     date.getTime());
 
         print("Questions results:");
