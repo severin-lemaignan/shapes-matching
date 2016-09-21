@@ -22,6 +22,11 @@ Rectangle {
     property int count: 0
     property int nb_rounds: 4
 
+    property int remainingTime: 5 * 60
+
+    property int goodAnswers: 0
+    property double amountPerAnswer: 0.1
+
     property string logfilename: ""
 
     property int seed: 1
@@ -310,10 +315,12 @@ Rectangle {
 
             validator: IntValidator {bottom: 0; top: 99;}
             onAccepted: {
+                if (text === nextAnswer.toString()) goodAnswers++;
                 text="";
                 generateQuestion();
                 messageDialog.visible=true;
                 window1.count += 1;
+
                 if (window1.count > window1.nb_rounds) {
                     window1.state = "questionaire1"
                 }
@@ -331,11 +338,18 @@ Rectangle {
 
                 if (window1.state === "") {
                     window1.state="question";
+                    timer.start();
 
                 }
 
             }
         }
+
+            Timer {
+                id: timer
+                    interval: 1000; running: false; repeat: true;
+                    onTriggered: remainingTime -= 1
+                }
 
         MessageDialog {
             id: messageDialog
@@ -349,6 +363,22 @@ Rectangle {
             standardButtons: StandardButton.Close
 
             visible: false
+        }
+    }
+
+    Rectangle {
+        id: rectangle1
+        width: childrenRect.width
+        height: 200
+        color: "#000000"
+        visible: false
+        anchors.right: parent.right
+
+        Text {
+            id: timertext
+            color: "#ffffff"
+            text: remainingTime + "sec left, you've earned £" + (goodAnswers * amountPerAnswer).toFixed(2) + " so far"
+            font.pixelSize: 30
         }
     }
     states: [
@@ -373,6 +403,11 @@ Rectangle {
 
             PropertyChanges {
                 target: sumtext
+                visible: true
+            }
+
+            PropertyChanges {
+                target: rectangle1
                 visible: true
             }
 
@@ -508,13 +543,13 @@ Rectangle {
         var question;
 
         while (res < 30) {
-                res = Math.floor(random() * 20);
+                res = Math.floor(random() * 19) + 1;
                 question = res.toString() + " ";
 
 
                 for (var i = 0; i < 5; i++) {
 
-                        var value = Math.floor(random() * 20);
+                        var value = Math.floor(random() * 19) + 1;
 
                         if (random() > 0.5) {
 
