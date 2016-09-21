@@ -407,6 +407,15 @@ Rectangle {
                     id: nextButton
                     text: qsTr("Start")
                     Layout.fillWidth: true
+                    style: ButtonStyle {
+                            label: Text {
+                                    renderType: Text.NativeRendering
+                                    verticalAlignment: Text.AlignVCenter
+                                    horizontalAlignment: Text.AlignHCenter
+                                    font.pointSize: 30
+                                    text: nextButton.text
+                            }
+                    }
 
                     onClicked: {
 
@@ -681,8 +690,6 @@ Rectangle {
 
 
                     }
-                    print(res);
-                    print(question);
             }
 
             window1.nextAnswer = res;
