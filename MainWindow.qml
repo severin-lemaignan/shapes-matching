@@ -653,7 +653,7 @@ Rectangle {
             for(var i = 0; i < window1.nb_expe_rounds; i++) {
                 headers += "q" + i + ",response_time" + i + ",dialog_dismiss_response_time" + i + ",";
             }
-            headers += "gender,age,q1,q2,q3,q4,q5,q61,q62,q71,q72,q81,q82,familiarity,endtime";
+            headers += "gender,age,q1,q2,q3,q4,q5,q6,q7,q8,familiarity,endtime";
             fileio.write(window1.logfilename, headers);
 
             print("Activity and logs initialized.")
@@ -716,7 +716,7 @@ Rectangle {
                      question6.result,
                      question7.result,
                      question8.result,
-                     //familiaquestion.result,
+                     familiaquestion.result,
                      date.getTime());
 
             print("Questions results:");
