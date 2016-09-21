@@ -448,8 +448,8 @@ Rectangle {
                     id: messageDialog
                     property double popupTime: 0
                     title: "[PlymAssess2-debug]"
-                    text: "[debug] generated question " + nextQuestion + "\n[debug] expected answer " + nextAnswer
-                    onRejected: {
+                    text: "[debug] generated next question " + nextQuestion + "\n[debug] expected answer " + nextAnswer
+                    onAccepted: {
                         if(window1.demoDone) {
                                 var date = new Date();
                                 window1.dialogDismissResponseTimes.push(date.getTime()-popupTime);
@@ -458,7 +458,7 @@ Rectangle {
                         close();
                     }
                     icon: StandardIcon.Information
-                    standardButtons: StandardButton.Close
+                    standardButtons: StandardButton.Ok
 
                     visible: false
             }
