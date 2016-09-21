@@ -632,6 +632,7 @@ Rectangle {
             window1.goodAnswers=0;
             window1.seed = 1;
             window1.count = 0;
+            window1.demoDone = false;
 
             agequestion.reset();
             question1.reset();
