@@ -651,7 +651,7 @@ Rectangle {
             }
             PropertyChanges {
                 target: greetings_text1
-                text: "You've reached the maximum of 25 questions\nin less than 5 minutes!\nYou can now return the tablet\nto the experimenter."
+                text: "You've reached the maximum of 25 questions\nin less than 5 minutes! You've earned £" + (window1.goodAnswers * window1.amountPerAnswer).toFixed(2) + "\nYou can now return the tablet\nto the experimenter."
             }
 
         }
