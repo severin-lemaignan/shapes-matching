@@ -17,17 +17,18 @@ Rectangle {
     property double starttime: 0
 
     property int nextAnswer: 0
+    property int lastAttempt: 0
     property string nextQuestion: ""
 
     property int count: 0
     property int nb_demo_rounds: 3
-    property int nb_expe_rounds: 5
+    property int nb_expe_rounds: 25
 
     property int allowedTime: 5 * 60
     property int remainingTime: 0
 
     property int goodAnswers: 0
-    property double amountPerAnswer: 0.1
+    property double amountPerAnswer: 0.2
     property var answers: []
     property var answersResponseTimes: []
     property var dialogDismissResponseTimes: []
@@ -76,7 +77,7 @@ Rectangle {
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
                     horizontalAlignment: Text.AlignHCenter
-                    font.pointSize: 24
+                    font.pointSize: 50
                     font.bold: true
                     color: "#ffffff"
             }
@@ -86,7 +87,7 @@ Rectangle {
                     width: 706
                     height: 182
                     color: "#ffffff"
-                    text: "Thank you."
+                    text: "You can now return the tablet to the experimenter."
                     font.bold: true
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
@@ -233,17 +234,11 @@ Rectangle {
             LikertScale {
                     id: question1
                     visible: false
-                    question: "I felt I was evaluated during the experiment for the quality of my work"
-
+                    question: "How often did you look at the answer?"
+                    minText: "Never"
+                    maxText: "Always"
 
             }
-
-            LikertScale {
-                    id: question2
-                    visible: false
-                    question: "I felt I was being evaluated for the speed of my work during the shape-matching task"
-            }
-
             LikertScale {
                     id: question3
                     visible: false
@@ -253,7 +248,7 @@ Rectangle {
             LikertScale {
                     id: question4
                     visible: false
-                    question: "I found the robot/observer to be distracting"
+                    question: "I found the observer to be distracting"
             }
 
             LikertScale {
@@ -273,7 +268,7 @@ Rectangle {
             LikertScale {
                     id: question7
                     visible: false
-                    question: "I felt I performed well..."
+                    question: "I felt I performed..."
                     minText: "Not well"
                     maxText: "Very well"
             }
@@ -356,8 +351,9 @@ Rectangle {
 
                     property double answerStartTime: 0
 
-                    validator: IntValidator {bottom: 0; top: 99;}
+                    validator: IntValidator {bottom: 100; top: 999;}
                     onAccepted: {
+                            window1.lastAttempt = text;
 
                             var date = new Date();
 
@@ -390,7 +386,9 @@ Rectangle {
                                     answersResponseTimes.push(responseTime);
 
                                     if (window1.count >= window1.nb_expe_rounds) {
-                                            window1.state = "questionaire1"
+                                            window1.state = "tooquicktext"
+                                    } else if (window1.remainingTime <= 0) {
+                                            window1.state = "endtext"
                                     } else {
                                             answerStartTime = date.getTime();
                                             messageDialog.popupTime = answerStartTime;
@@ -434,6 +432,10 @@ Rectangle {
                                     messageDialog.open();
 
                             }
+                            if (window1.state === "endtext" || window1.state === "tooquicktext") {
+                                window1.state="questionaire1";
+                            }
+
 
                     }
             }
@@ -448,7 +450,7 @@ Rectangle {
                     id: messageDialog
                     property double popupTime: 0
                     title: "[PlymAssess2-debug]"
-                    text: "[debug] generated next question " + nextQuestion + "\n[debug] expected answer " + nextAnswer
+                    text: "[debug] generated next question " + nextQuestion + "\n[debug] last attempt " + window1.lastAttempt + "\n[debug] expect answ " + nextAnswer + "\n[debug] remain time " + window1.remainingTime
                     onAccepted: {
                         if(window1.demoDone) {
                                 var date = new Date();
@@ -548,11 +550,6 @@ Rectangle {
                     }
 
                     PropertyChanges {
-                            target: question2
-                            visible: true
-                    }
-
-                    PropertyChanges {
                             target: question3
                             visible: true
                     }
@@ -618,7 +615,44 @@ Rectangle {
                             target: instructions
                             visible: false
                     }
+        },
+        State {
+            name: "endtext"
+
+            PropertyChanges {
+                target: nextButton
+                visible: false
             }
+
+            PropertyChanges {
+                target: text1
+                text: qsTr("Well done! You've earned  £" + (window1.goodAnswers * window1.amountPerAnswer).toFixed(2))
+            }
+
+            PropertyChanges {
+                target: instructions
+                anchors.verticalCenterOffset: 0
+                anchors.horizontalCenterOffset: 1
+            }
+        },
+        State {
+            name: "tooquicktext"
+            PropertyChanges {
+                target: nextButton
+                visible: false
+            }
+
+            PropertyChanges {
+                target: text1
+                text: qsTr("You've reached the maximum of 25 questions in less than 5 minutes! Well done!")
+            }
+
+            PropertyChanges {
+                target: instructions
+                anchors.verticalCenterOffset: 0
+                anchors.horizontalCenterOffset: 1
+            }
+        }
     ]
 
 
@@ -627,16 +661,20 @@ Rectangle {
 
             print("Initializing the activity...")
             window1.nextAnswer=0;
+            window1.lastAttempt = 0;
             window1.nextQuestion="";
             window1.remainingTime=window1.allowedTime;
             window1.goodAnswers=0;
-            window1.seed = 1;
             window1.count = 0;
             window1.demoDone = false;
+            window1.answers = [];
+            window1.answersResponseTimes = [];
+            window1.dialogDismissResponseTimes = [];
+
+            window1.seed = 1;
 
             agequestion.reset();
             question1.reset();
-            question2.reset();
             question3.reset();
             question4.reset();
             question5.reset();
@@ -654,7 +692,7 @@ Rectangle {
             for(var i = 0; i < window1.nb_expe_rounds; i++) {
                 headers += "q" + i + ",response_time" + i + ",dialog_dismiss_response_time" + i + ",";
             }
-            headers += "gender,age,q1,q2,q3,q4,q5,q6,q7,q8,familiarity,endtime";
+            headers += "gender,age,q1,q2,q3,q4,q5,q6,q7,familiarity,endtime";
             fileio.write(window1.logfilename, headers);
 
             print("Activity and logs initialized.")
@@ -666,35 +704,73 @@ Rectangle {
             var res=0;
             var question;
 
-            while (res < 30) {
-                    res = Math.floor(random() * 19) + 1;
-                    question = res.toString() + " ";
+            var questions = [
+                        ["412 + 167 + 204", 783],
+                        ["309 + 272 + 105", 686],
+                        ["629 + 203 + 166", 998],
+                        ["212 + 207 + 322", 741],
+                        ["599 + 103 + 106", 808],
+                        ["478 + 222 + 367", 857],
+                        ["352 + 424 + 109", 895],
+                        ["283 + 206 + 202", 590],
+                        ["313 + 479 + 205", 997],
+                        ["701 + 119 + 168", 988],
+                        ["442 + 102 + 427", 971],
+                        ["139 + 323 + 519", 981],
+                        ["353 + 472 + 164", 989],
+                        ["101 + 493 + 175", 769],
+                        ["317 + 338 + 229", 884],
+                        ["110 + 204 + 559", 873],
+                        ["327 + 215 + 104", 646],
+                        ["571 + 109 + 113", 793],
+                        ["362 + 315 + 252", 929],
+                        ["111 + 213 + 395", 719],
+                        ["617 + 154 + 216", 987],
+                        ["536 + 246 + 116", 898],
+                        ["263 + 317 + 419", 999],
+                        ["714 + 127 + 148", 989],
+                        ["355 + 438 + 106", 899],
+                        ["443 + 272 + 103", 818],
+                        ["338 + 218 + 330", 886],
+                        ["111 + 231 + 129", 471]
+                             ]
+            //while (res < 100 || res > 999) {
+            //        res = Math.floor(random() * 400) + 100;
+            //        question = res.toString() + " ";
 
 
-                    for (var i = 0; i < 5; i++) {
+            //        for (var i = 0; i < 2; i++) {
 
-                            var value = Math.floor(random() * 19) + 1;
+            //                var value = Math.floor(random() * 400) + 100;
 
-                            if (random() > 0.5) {
+            //                if (random() > 0.5) {
 
-                                    res = res + value;
-                                    question += "+ ";
-                            }
-                            else {
-                                    res = res - value;
-                                    question += "- ";
-
-
-                            }
-
-                            question += value.toString() + " ";
+            //                        res = res + value;
+            //                        question += "+ ";
+            //                }
+            //                else {
+            //                        res = res - value;
+            //                        question += "- ";
 
 
-                    }
-            }
+            //                }
 
-            window1.nextAnswer = res;
-            window1.nextQuestion = question;
+            //                question += value.toString() + " ";
+
+
+            //        }
+            //}
+
+            //window1.nextAnswer = res;
+            //window1.nextQuestion = question;
+
+            var index = window1.count;
+            if (window1.demoDone) {index += 3;}
+
+            if (index > window1.nb_expe_rounds) {return;}
+
+            window1.nextAnswer = questions[index][1];
+            window1.nextQuestion = questions[index][0];
     }
 
     function saveQuestions() {
@@ -710,7 +786,6 @@ Rectangle {
             log.push(genderquestion.gender,
                      agequestion.age,
                      question1.result,
-                     question2.result,
                      question3.result,
                      question4.result,
                      question5.result,
