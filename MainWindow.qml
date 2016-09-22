@@ -53,7 +53,15 @@ Rectangle {
             anchors.topMargin: 0
             anchors.horizontalCenter: parent.horizontalCenter
             visible: false
-            onClicked: initializeActivity()
+            onClicked: {
+
+                    if (window1.state === "endtext" || window1.state === "tooquicktext") {
+                            window1.state="questionaire1";
+                    }
+                    else {
+                        initializeActivity();
+                    }
+            }
 
             Rectangle {
                     id: hiddenButtonRectangle
@@ -620,6 +628,10 @@ Rectangle {
             name: "endtext"
 
             PropertyChanges {
+                target: restartHiddenButton
+                visible: true
+            }
+            PropertyChanges {
                 target: nextButton
                 visible: false
             }
@@ -637,6 +649,10 @@ Rectangle {
         },
         State {
             name: "tooquicktext"
+            PropertyChanges {
+                target: restartHiddenButton
+                visible: true
+            }
             PropertyChanges {
                 target: nextButton
                 visible: false
