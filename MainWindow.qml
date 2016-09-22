@@ -72,19 +72,13 @@ Rectangle {
 
 
     ColumnLayout {
-            id: greetings
-            anchors.verticalCenter: parent.verticalCenter
-            anchors.horizontalCenter: parent.horizontalCenter
+        id: greetings
+        anchors.fill: parent
             visible: false
 
             Text {
                     id: greetings_text
-                    width: 706
-                    height: 182
                     text: "Thank you."
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
-                    horizontalAlignment: Text.AlignHCenter
                     font.pointSize: 50
                     font.bold: true
                     color: "#ffffff"
@@ -92,14 +86,9 @@ Rectangle {
 
             Text {
                     id: greetings_text1
-                    width: 706
-                    height: 182
                     color: "#ffffff"
                     text: "You can now return the tablet to the experimenter."
                     font.bold: true
-                    horizontalAlignment: Text.AlignHCenter
-                    wrapMode: Text.WordWrap
-                    verticalAlignment: Text.AlignVCenter
                     font.pointSize: 24
             }
 
@@ -415,6 +404,7 @@ Rectangle {
                     id: nextButton
                     text: qsTr("Start")
                     focus: true
+                    visible:true
                     Layout.fillWidth: true
                     style: ButtonStyle {
                             label: Text {
@@ -461,7 +451,7 @@ Rectangle {
                     id: messageDialog
                     property double popupTime: 0
                     title: "[PlymAssess2-debug]"
-                    text: "[debug] generated next question " + nextQuestion + "\n[debug] last attempt " + window1.lastAttempt + "\n[debug] expect answ " + nextAnswer + "\n[debug] remain time " + window1.remainingTime
+                    text: "[debug] generated next question " + nextQuestion + "\n[debug] last attempt " + window1.lastAttempt + "\n[debug] expect answ " + nextAnswer + "\n[debug] remain time " + Math.max(0,window1.remainingTime)
                     onAccepted: {
                         if(window1.demoDone) {
                                 var date = new Date();
@@ -488,7 +478,7 @@ Rectangle {
             Text {
                     id: timertext
                     color: "#ffffff"
-                    text: pad(Math.floor(remainingTime/60),2) + ":" + pad(remainingTime % 60,2) + " left, you've earned £" + (goodAnswers * amountPerAnswer).toFixed(2) + " so far"
+                    text: pad(Math.max(0,Math.floor(remainingTime/60),2)) + ":" + pad(Math.max(0,remainingTime % 60,2)) + " left, you've earned £" + (goodAnswers * amountPerAnswer).toFixed(2) + " so far"
                     font.pixelSize: 100
             }
     }
@@ -531,11 +521,6 @@ Rectangle {
                     }
 
                     PropertyChanges {
-                            target: nextButton
-                            visible: false
-                    }
-
-                    PropertyChanges {
                             target: instructions
                             visible: false
                     }
@@ -575,11 +560,6 @@ Rectangle {
                     PropertyChanges {
                             target: answer
                             visible: true
-                    }
-
-                    PropertyChanges {
-                            target: nextButton
-                            visible: false
                     }
 
                     PropertyChanges {
@@ -653,8 +633,8 @@ Rectangle {
         State {
             name: "tooquicktext"
                     PropertyChanges {
-                            target: greetings
-                            visible: true
+                        target: greetings
+                        visible: true
                     }
                     PropertyChanges {
                             target: restartHiddenButton
@@ -706,6 +686,7 @@ Rectangle {
 
             window1.state = "";
             nextButton.forceActiveFocus();
+
 
             var date = new Date();
             window1.starttime = date.getTime();
