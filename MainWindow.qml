@@ -478,7 +478,7 @@ Rectangle {
             Text {
                     id: timertext
                     color: "#ffffff"
-                    text: pad(Math.max(0,Math.floor(remainingTime/60),2)) + ":" + pad(Math.max(0,remainingTime % 60,2)) + " left, you've earned £" + (goodAnswers * amountPerAnswer).toFixed(2) + " so far"
+                    text: pad(Math.max(0,Math.floor(remainingTime/60)),2) + ":" + pad(Math.max(0,remainingTime % 60),2) + " left, you've earned £" + (goodAnswers * amountPerAnswer).toFixed(2) + " so far"
                     font.pixelSize: 100
             }
     }
