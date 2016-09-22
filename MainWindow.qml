@@ -626,48 +626,50 @@ Rectangle {
         },
         State {
             name: "endtext"
-
+                    PropertyChanges {
+                            target: greetings
+                            visible: true
+                    }
+                    PropertyChanges {
+                            target: restartHiddenButton
+                            visible: true
+                    }
+                    PropertyChanges {
+                            target: instructions
+                            visible: false
+                    }
             PropertyChanges {
-                target: restartHiddenButton
-                visible: true
+                target: greetings_text
+                text: "Well done!"
             }
             PropertyChanges {
-                target: nextButton
-                visible: false
-            }
-
-            PropertyChanges {
-                target: text1
-                text: qsTr("Well done! You've earned  £" + (window1.goodAnswers * window1.amountPerAnswer).toFixed(2))
-            }
-
-            PropertyChanges {
-                target: instructions
-                anchors.verticalCenterOffset: 0
-                anchors.horizontalCenterOffset: 1
+                target: greetings_text1
+                text: "You've earned £" + (window1.goodAnswers * window1.amountPerAnswer).toFixed(2) + ".\nYou can now return the tablet to the experimenter."
             }
         },
         State {
             name: "tooquicktext"
+                    PropertyChanges {
+                            target: greetings
+                            visible: true
+                    }
+                    PropertyChanges {
+                            target: restartHiddenButton
+                            visible: true
+                    }
+                    PropertyChanges {
+                            target: instructions
+                            visible: false
+                    }
             PropertyChanges {
-                target: restartHiddenButton
-                visible: true
+                target: greetings_text
+                text: "Well done!"
             }
             PropertyChanges {
-                target: nextButton
-                visible: false
+                target: greetings_text1
+                text: "You've reached the maximum of 25 questions in less than 5 minutes!\nYou can now return the tablet to the experimenter."
             }
 
-            PropertyChanges {
-                target: text1
-                text: qsTr("You've reached the maximum of 25 questions in less than 5 minutes! Well done!")
-            }
-
-            PropertyChanges {
-                target: instructions
-                anchors.verticalCenterOffset: 0
-                anchors.horizontalCenterOffset: 1
-            }
         }
     ]
 
