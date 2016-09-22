@@ -36,6 +36,7 @@ Rectangle {
 
 
     property string logfilename: ""
+    property string qlogfilename: ""
 
     property int seed: 1
 
@@ -690,13 +691,10 @@ Rectangle {
 
             var date = new Date();
             window1.starttime = date.getTime();
-            window1.logfilename = window1.starttime + "_social_presence_log.csv";
-            var headers = "starttime,"
-            for(var i = 0; i < window1.nb_expe_rounds; i++) {
-                headers += "q" + i + ",response_time" + i + ",dialog_dismiss_response_time" + i + ",";
-            }
-            headers += "gender,age,q1,q2,q3,q4,q5,q6,q7,familiarity,endtime";
-            fileio.write(window1.logfilename, headers);
+            window1.logfilename = window1.starttime + "_social_presence_response_times_log.csv";
+            window1.qlogfilename = window1.starttime + "_social_presence_questions_log.csv";
+            var headers = "starttime,gender,age,q1,q2,q3,q4,q5,q6,q7,familiarity,endtime";
+            fileio.write(window1.qlogfilename, headers);
 
             print("Activity and logs initialized.")
     }
@@ -806,11 +804,6 @@ Rectangle {
             var date = new Date();
 
             var log = [window1.starttime];
-            for(var i = 0; i < window1.nb_expe_rounds; i++) {
-                log.push(window1.answers[i]);
-                log.push(window1.answersResponseTimes[i]);
-                log.push(window1.dialogDismissResponseTimes[i]);
-            }
 
             log.push(genderquestion.gender,
                      agequestion.age,
@@ -827,7 +820,13 @@ Rectangle {
             print("Questions results:");
             print(log.join(","));
 
-            fileio.write(window1.logfilename, log.join(","));
+            fileio.write(window1.qlogfilename, log.join(","));
+
+            for(var i = 0; i < window1.count; i++) {
+                var times = [window1.answers[i], window1.answersResponseTimes[i], window1.dialogDismissResponseTimes[i]];
+                fileio.write(window1.logfilename, times.join(","));
+            }
+
     }
 
     // use custom random generator that is seedable
