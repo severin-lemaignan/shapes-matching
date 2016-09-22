@@ -730,7 +730,10 @@ Rectangle {
                     ["42 + 73 + 33",148],
                     ["21 + 73 + 55",149],
                     ["55 + 72 + 61",188],
-                    ["71 + 92 + 94",257]
+                    ["71 + 92 + 94",257],
+                    ["13 + 43 + 71",127],
+                    ["81 + 34 + 63",178],
+                    ["11 + 25 + 81",117]
                ];
 //                        ["412 + 167 + 204", 783],
 //                        ["309 + 272 + 105", 686],
@@ -791,10 +794,12 @@ Rectangle {
             //window1.nextAnswer = res;
             //window1.nextQuestion = question;
 
+
             var index = window1.count;
             if (window1.demoDone) {index += 3;}
 
-            if (index > window1.nb_expe_rounds) {return;}
+
+            if (index >= window1.nb_expe_rounds + 3) {return;}
 
             window1.nextAnswer = questions[index][1];
             window1.nextQuestion = questions[index][0];
