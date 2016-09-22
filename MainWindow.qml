@@ -336,7 +336,7 @@ Rectangle {
                     color: "#ffffff"
                     text: qsTr("Welcome")
                     font.bold: true
-                    font.pixelSize: 50
+                    font.pixelSize: 150
             }
 
             Text {
@@ -344,7 +344,7 @@ Rectangle {
                     color: "#ffffff"
                     text: nextQuestion + " = ?"
                     font.bold: true
-                    font.pixelSize: 50
+                    font.pixelSize: 150
                     visible: false
             }
 
@@ -352,6 +352,7 @@ Rectangle {
                     id: answer
                     width: 300
                     visible: false
+                    focus:true
                     Layout.fillWidth: true
                     font.pointSize: 30
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -377,6 +378,7 @@ Rectangle {
                                             window1.count = 0;
                                             window1.demoDone = true;
                                             window1.state = ""
+                                            nextButton.forceActiveFocus();
 
                                     } else {
                                             messageDialog.open();
@@ -412,6 +414,7 @@ Rectangle {
             Button {
                     id: nextButton
                     text: qsTr("Start")
+                    focus: true
                     Layout.fillWidth: true
                     style: ButtonStyle {
                             label: Text {
@@ -486,7 +489,7 @@ Rectangle {
                     id: timertext
                     color: "#ffffff"
                     text: pad(Math.floor(remainingTime/60),2) + ":" + pad(remainingTime % 60,2) + " left, you've earned £" + (goodAnswers * amountPerAnswer).toFixed(2) + " so far"
-                    font.pixelSize: 50
+                    font.pixelSize: 100
             }
     }
     states: [
@@ -644,7 +647,7 @@ Rectangle {
             }
             PropertyChanges {
                 target: greetings_text1
-                text: "You've earned £" + (window1.goodAnswers * window1.amountPerAnswer).toFixed(2) + ".\nYou can now return the tablet to the experimenter."
+                text: "You've earned £" + (window1.goodAnswers * window1.amountPerAnswer).toFixed(2) + ".\nYou can now return the tablet\nto the experimenter."
             }
         },
         State {
@@ -667,7 +670,7 @@ Rectangle {
             }
             PropertyChanges {
                 target: greetings_text1
-                text: "You've reached the maximum of 25 questions in less than 5 minutes!\nYou can now return the tablet to the experimenter."
+                text: "You've reached the maximum of 25 questions\nin less than 5 minutes!\nYou can now return the tablet\nto the experimenter."
             }
 
         }
@@ -702,6 +705,7 @@ Rectangle {
             familiaquestion.reset();
 
             window1.state = "";
+            nextButton.forceActiveFocus();
 
             var date = new Date();
             window1.starttime = date.getTime();
