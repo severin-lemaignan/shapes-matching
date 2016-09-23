@@ -15,6 +15,7 @@ Rectangle {
 
 
     property double starttime: 0
+    property double endtime: 0
 
     property int nextAnswer: 0
     property int lastAttempt: 0
@@ -116,7 +117,17 @@ Rectangle {
                     anchors.horizontalCenter: parent.horizontalCenter
                     spacing: 12
 
-                    property string gender: isFemale.checked ? "female" : "male"
+                    function gender() {
+
+                        if (isFemale.checked) return "female";
+                        if (isMale.checked) return "male";
+                        return "notspecified";
+                    }
+
+                    function reset(){
+                            isFemale.checked = false;
+                            isMale.checked = false;
+                    }
 
                     Text {
                             color: "#ffffff"
@@ -140,7 +151,6 @@ Rectangle {
 
                             RadioButton {
                                     id: isFemale
-                                    checked: true
                                     exclusiveGroup: tabPositionGroup
                                     style: RadioButtonStyle {
                                             indicator: Rectangle {
@@ -386,8 +396,10 @@ Rectangle {
                                     answersResponseTimes.push(responseTime);
 
                                     if (window1.count >= window1.nb_expe_rounds) {
+                                            window1.endtime = date.getTime();
                                             window1.state = "tooquicktext"
                                     } else if (window1.remainingTime <= 0) {
+                                            window1.endtime = date.getTime();
                                             window1.state = "endtext"
                                     } else {
                                             answerStartTime = date.getTime();
@@ -675,6 +687,7 @@ Rectangle {
 
             window1.seed = 1;
 
+            genderquestion.reset();
             agequestion.reset();
             question1.reset();
             question3.reset();
@@ -693,7 +706,7 @@ Rectangle {
             window1.starttime = date.getTime();
             window1.logfilename = window1.starttime + "_social_presence_response_times_log.csv";
             window1.qlogfilename = window1.starttime + "_social_presence_questions_log.csv";
-            var headers = "starttime,gender,age,q1,q2,q3,q4,q5,q6,q7,familiarity,endtime";
+            var headers = "starttime,endtime_sums,gender,age,q1,q2,q3,q4,q5,q6,q7,familiarity,endtime";
             fileio.write(window1.qlogfilename, headers);
 
             print("Activity and logs initialized.")
@@ -808,9 +821,9 @@ Rectangle {
     function saveQuestions() {
             var date = new Date();
 
-            var log = [window1.starttime];
+            var log = [window1.starttime, window1.endtime];
 
-            log.push(genderquestion.gender,
+            log.push(genderquestion.gender(),
                      agequestion.age,
                      question1.result,
                      question3.result,
